@@ -1,0 +1,23 @@
+{
+  "name": "vitalhub",
+  "version": "1.0.0",
+  "description": "<div align=\"center\">",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "build": "npm install",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "VitalHub"
+  },
+  "author": "Saqlain Mansab",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
+    "joi": "^17.13.3",
+    "mongoose": "^8.7.1"
+  }
+}
