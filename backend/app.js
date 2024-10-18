@@ -4,7 +4,9 @@ const app = express();
 const mongoose = require('mongoose');
 require("dotenv").config();
 
+let User = require('./models/user');
 let Password = require('./models/password');
+let Food = require('./models/food');
 
 const MONGO_URL = process.env.MONGO_URL;
 
