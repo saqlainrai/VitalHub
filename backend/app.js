@@ -22,11 +22,9 @@ async function main() {
     await mongoose.connect(MONGO_URL);
 }
 
-app.get('/passwords', async (req, res) => {
-    let u = mongoose.model('user', new mongoose.Schema({}));
-    let d = await u.find();
-    let passwords = await Password.find();
-    res.json(d);
+app.get('/users', async (req, res) => {
+    let users = await User.find({}).select('username email hash salt');;
+    res.json(users);
 });
 
 app.get('/', (req, res) => {

@@ -25,8 +25,18 @@ const initDB = async () => {
   await Password.deleteMany({});
   await Food.deleteMany({});
   
-  await User.insertMany(initData.users);
-  
-  console.log("data was initialized");
+  // createUsers(initData.users)
+  // console.log("Users created!");
+  // Food.insertMany(initData.foods);
+  // console.log("Foods created!");
+
+  console.log("Successful!");
 };
+
+function createUsers(f) {
+  for( user of f) {
+    User.register(new User({ username: user.username, email: user.email }), user.password);
+  }
+}
+
 initDB();
