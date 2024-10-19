@@ -1,0 +1,45 @@
+
+
+const WelcomeFoodFitness = () => {
+    const images = [
+      {
+        src: "https://www.myfitnesspal.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvalue-prop-1.51bb606c.png&w=1200&q=75", // Replace with your image URL
+        caption: "Ready for some wins? Start tracking, it’s easy!",
+      },
+      {
+        src: "https://www.myfitnesspal.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvalue-prop-2.66444795.png&w=1200&q=75", // Replace with your image URL
+        caption: "Discover the impact of your food and fitness",
+      },
+      {
+        src: "https://www.myfitnesspal.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fvalue-prop-3.258be271.png&w=1200&q=75", // Replace with your image URL
+        caption: "And make mindful eating a habit for life",
+      },
+    ];
+  return (
+    <div className="text-center">
+      <div className="text-slate-700 text-[25px]">Welcome to</div>
+      <div className="text-blue-800 text-[30px] font-bold">
+        Fitness and Food Tracker
+      </div>
+      <div className="flex flex-col items-center justify-center text-center">
+        <div className="flex space-x-4 mt-4">
+          {images.map((image, index) => (
+            <div key={index} className="flex flex-col items-center">
+              <img
+                src={image.src}
+                alt={image.caption}
+                className="size-[80%] object-cover rounded-lg shadow-md"
+              />
+              <p className="mt-2 text-sm text-gray-700">{image.caption}</p>
+            </div>
+          ))}
+        </div>
+        <button className=" px-24 py-3 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-200">
+          Continue
+        </button>
+      </div>
+    </div>
+  );
+}
+
+export default WelcomeFoodFitness

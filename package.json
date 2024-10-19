@@ -13,5 +13,6 @@
   "author": "Saqlain Mansab",
   "license": "ISC",
   "dependencies": {
+    "react-router-dom": "^6.27.0"
   }
 }
