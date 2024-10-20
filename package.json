@@ -8,7 +8,8 @@
   },
   "repository": {
     "type": "git",
-    "url": "VitalHub"
+    "url": "VitalHub",
+    "deploy_url": "https://vital-hub-six.vercel.app/"
   },
   "author": "Saqlain Mansab",
   "license": "ISC",
