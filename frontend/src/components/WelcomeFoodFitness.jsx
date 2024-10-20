@@ -16,25 +16,25 @@ const WelcomeFoodFitness = () => {
       },
     ];
   return (
-    <div className="text-center">
-      <div className="text-slate-700 text-[25px]">Welcome to</div>
-      <div className="text-blue-800 text-[30px] font-bold">
+    <div className="mt-[3%]  text-center">
+      <div className="text-slate-700 text-[30px]">Welcome to</div>
+      <div className="text-blue-800 text-[35px] font-bold">
         Fitness and Food Tracker
       </div>
-      <div className="flex flex-col items-center justify-center text-center">
-        <div className="flex space-x-4 mt-4">
+      <div className="flex flex-col items-center">
+        <div className="flex space-x-4 mt-4 px-[7%]">
           {images.map((image, index) => (
             <div key={index} className="flex flex-col items-center">
               <img
                 src={image.src}
                 alt={image.caption}
-                className="size-[80%] object-cover rounded-lg shadow-md"
+                className=" object-cover rounded-lg shadow-md"
               />
-              <p className="mt-2 text-sm text-gray-700">{image.caption}</p>
+              <p className="mt-2 text-xl mb-[10%] px-[6%] text-center text-gray-700">{image.caption}</p>
             </div>
           ))}
         </div>
-        <button className=" px-24 py-3 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-200">
+        <button className="sticky bottom-3  px-28 py-5 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-200">
           Continue
         </button>
       </div>

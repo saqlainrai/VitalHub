@@ -8,6 +8,7 @@ class Page extends Component {
       <>
         
          <WelcomeFoodFitness/>
+         {/* <CaloriesRequirmentForm/> */}
       </>
     );
   }
