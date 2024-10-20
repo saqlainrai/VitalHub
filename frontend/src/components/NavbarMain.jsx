@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 import arrow_logo from "../../public/arrow_top.png";
 
 const NavbarMain = () => {
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null); // Create a ref for the dropdown
+  const navigate = useNavigate(); // Initialize navigate
 
   // Toggle dropdown visibility
   const toggleDropdown = () => {
@@ -51,18 +52,30 @@ const NavbarMain = () => {
 
         {/* Center Menu Items */}
         <div className="flex space-x-20 text-sm font-medium">
-          <a href="#food" className="hover:text-blue-300">
+          <button
+            className="hover:text-blue-300"
+            onClick={() => navigate("/welcome")} // Navigate to /welcome on click
+          >
             Food
-          </a>
-          <a href="#fitness" className="hover:text-blue-300">
+          </button>
+          <button
+            className="hover:text-blue-300"
+            onClick={() => navigate("/fitness")} // Replace with appropriate route if needed
+          >
             Fitness
-          </a>
-          <a href="#money" className="hover:text-blue-300">
+          </button>
+          <button
+            className="hover:text-blue-300"
+            onClick={() => navigate("/expensesDashboard")} // Navigate to /expensesDashboard on click
+          >
             Money
-          </a>
-          <a href="#passwords" className="hover:text-blue-300">
+          </button>
+          <button
+            className="hover:text-blue-300"
+            onClick={() => navigate("/passwords")} // Replace with appropriate route if needed
+          >
             Passwords
-          </a>
+          </button>
         </div>
 
         {/* Name on the Right */}

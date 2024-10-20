@@ -13,6 +13,7 @@ import "./index.css";
 import Footer from "./components/Footer.jsx"; // Import the footer
 import FoodTimeTable from "./pages/FoodTimeTable.jsx";
 import ExpensesDashboard from "./pages/ExpensesDashboard.jsx";
+import SignUp from "./pages/SignUp.jsx";
 
 // Render the application with routing
 createRoot(document.getElementById("root")).render(
@@ -23,14 +24,13 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<Home />} /> {/* Home page route */}
         <Route path="/login" element={<Login />} /> {/* Login page route */}
+        <Route path="/signup" element={<SignUp />} /> {/* Login page route */}
         <Route path="/welcome" element={<Welcome />} />{" "}
         {/* Welcome screen route */}
         <Route path="/FoodForm" element={<FoodForm />} />
         <Route path="/FoodDashBoard" element={<FoodDashboard />} />
         <Route path="/FoodTimeTable" element={<FoodTimeTable />} />
-        <Route path="/ExpensesDashboard" element={<ExpensesDashboard />}
-        
-        />{" "}
+        <Route path="/ExpensesDashboard" element={<ExpensesDashboard />} />{" "}
         {/* Food form route */}
       </Routes>
       <Footer /> {/* Footer placed outside the Routes */}
