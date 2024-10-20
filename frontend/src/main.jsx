@@ -28,7 +28,9 @@ createRoot(document.getElementById("root")).render(
         <Route path="/FoodForm" element={<FoodForm />} />
         <Route path="/FoodDashBoard" element={<FoodDashboard />} />
         <Route path="/FoodTimeTable" element={<FoodTimeTable />} />
-        <Route path="/ExpensesDashboard" element={<ExpensesDashboard />} />{" "}
+        <Route path="/ExpensesDashboard" element={<ExpensesDashboard />}
+        
+        />{" "}
         {/* Food form route */}
       </Routes>
       <Footer /> {/* Footer placed outside the Routes */}

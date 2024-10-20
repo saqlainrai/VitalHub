@@ -16,7 +16,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="bg-[#07242B] text-white py-6 relative">
+    <footer className="bg-[#07242B] text-white py-6 relative z-[-1]">
       {/* Header Section */}
       <div className="mx-auto hidden sm:hidden lg:flex md:flex font-bold w-[90%] sm:text-sm md:text-lg lg:text-lg xl:text-xl">
         <div className="w-1/4 px-4">About</div>

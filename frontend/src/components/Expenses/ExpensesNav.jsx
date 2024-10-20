@@ -1,33 +1,50 @@
 import React from "react";
 
-const Navbar = () => {
+const ExpensesNav = ({ setActiveComponent }) => {
+  const handleNavigation = (componentName) => {
+    setActiveComponent(componentName);
+  };
+
   return (
-    <nav className="bg-slate-200 sticky top-0 text-gray-800 p-4 shadow-md">
+    <nav className="bg-slate-50 text-black p-4 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         {/* Logo */}
-        <div className="text-xl font-semibold cursor-pointer">
-          ExpenseManage
-        </div>
+        <div className="text-2xl font-bold cursor-pointer">ExpenseManage</div>
 
         {/* Navigation Links */}
         <div className="flex space-x-8">
-          <a href="#" className="hover:text-gray-600">
+          <a
+            onClick={() => handleNavigation("ExpensesMain")}
+            className="cursor-pointer hover:text-gray-400"
+          >
             Dashboard
           </a>
-          <a href="#" className="hover:text-gray-600">
+          <a
+            onClick={() => handleNavigation("ExpenseManage")}
+            className="cursor-pointer hover:text-gray-400"
+          >
             Expense Manage
           </a>
-          <a href="#" className="hover:text-gray-600">
+          <a
+            onClick={() => handleNavigation("Reports")}
+            className="cursor-pointer hover:text-gray-400"
+          >
             Reports
           </a>
-          <a href="#" className="hover:text-gray-600">
+          <a
+            onClick={() => handleNavigation("Advices")}
+            className="cursor-pointer hover:text-gray-400"
+          >
             Advices
           </a>
         </div>
 
         {/* Right-side Button */}
         <div>
-          <button className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+          <button
+            className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
+            onClick={() => setActiveComponent("ExpenseForm")}
+          >
             Add Expense
           </button>
         </div>
@@ -36,4 +53,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default ExpensesNav;
