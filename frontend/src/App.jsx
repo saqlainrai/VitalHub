@@ -6,6 +6,8 @@ import Sidebar from './components/Sidebar';
 import Home from './pages/Home';
 import Reports from './pages/Reports';
 import BMI from './components/BMI'
+import ApexChartArea from './components/ApexChartArea';
+import ApexChartBar from './components/ApexChartBar';
 import './style.css'
 
 const App = () => {
@@ -22,8 +24,8 @@ const App = () => {
                 </main> */}
                 <div className='parent'>
                     <div className="left">
-                        <div className="calories"></div>
-                        <div className="exercise"></div>
+                        <div className="calories"><ApexChartArea/></div>
+                        <div className="exercise"><ApexChartBar/></div>
                     </div>
                     <div className="right"><BMI /></div>
                 </div>
