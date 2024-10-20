@@ -5,7 +5,7 @@ class Page extends Component {
     render() {
         return (
             <div className="login">
-                <h4>Login</h4>
+                <h4>Login funcio is here</h4>
                 <form>
                     <div className="text_area">
                         <input
