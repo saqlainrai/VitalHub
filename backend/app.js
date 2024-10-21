@@ -34,6 +34,11 @@ app.get("/app", (req, res) => {
     res.redirect("http://localhost:5173");
 });
 
+app.get("/api/data", (req, res) => {
+  console.log("The Request is received!!!")
+  res.json({ message: "Data Route is Working!" });
+});
+
 app.get('*', (req, res) => {
     res.send("404 Page Not Found");
 });

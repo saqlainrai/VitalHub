@@ -1,5 +1,5 @@
 // src/App.jsx
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -8,9 +8,42 @@ import Reports from './pages/Reports';
 import BMI from './components/BMI'
 import ApexChartArea from './components/ApexChartArea';
 import ApexChartBar from './components/ApexChartBar';
+import ProgressBar from './components/ProgressBar';
+import ExerciseList from './components/ExerciseList';
 import './style.css'
 
 const App = () => {
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch('/api/data');
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const jsonData = await response.json();
+                setData(jsonData);
+            } catch (error) {
+                setError(error.message);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
+    }, []); // Empty dependency array means this runs once on mount
+
+    if (loading) {
+        return <div>Loading...</div>;
+    }
+
+    if (error) {
+        return <div>Error: {error}</div>;
+    }
+
     return (
         <>
             <Navbar />
@@ -22,10 +55,13 @@ const App = () => {
                         <Route path="/reports" element={<Reports />} />
                     </Routes>
                 </main> */}
+                <div className="data">{data.message}</div>
                 <div className='parent'>
                     <div className="left">
-                        <div className="calories"><ApexChartArea/></div>
-                        <div className="exercise"><ApexChartBar/></div>
+                        <div className="exercise"><ApexChartArea/></div>
+                        <div className="calories">
+                            <ExerciseList/>
+                        </div>
                     </div>
                     <div className="right"><BMI /></div>
                 </div>

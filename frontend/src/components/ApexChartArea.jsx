@@ -18,21 +18,21 @@ class ApexChartArea extends React.Component {
         this.state = {
             series: [
                 {
-                    name: 'South',
+                    name: 'BMI',
                     data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
                         min: 10,
                         max: 60
                     })
                 },
                 {
-                    name: 'North',
+                    name: 'Weight',
                     data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
                         min: 10,
                         max: 20
                     })
                 },
                 {
-                    name: 'Central',
+                    name: 'Calories',
                     data: generateDayWiseTimeSeries(new Date('11 Feb 2017 GMT').getTime(), 20, {
                         min: 10,
                         max: 15
