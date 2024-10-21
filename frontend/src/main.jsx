@@ -5,7 +5,7 @@ import NavbarMain from "./components/NavbarMain.jsx";
 import Home from "./pages/Home.jsx"; // Import the Home page
 import Login from "./pages/LoginPage.jsx"; // Import the Login page
 import FoodDashboard from "./pages/FoodDashboard.jsx"; // Import the Login page
-import App from './App.jsx'
+// import App from './App.jsx'
 
 
 import Welcome from "./components/WelcomeFoodFitness.jsx"; // Import the Welcome screen
@@ -22,18 +22,7 @@ createRoot(document.getElementById("root")).render(
     <Router>
       <NavbarMain /> {/* Navbar that will persist across all pages */}
       {/* Define the Routes */}
-      <Routes>
-        <Route path="/" element={<Home />} /> {/* Home page route */}
-        <Route path="/login" element={<Login />} /> {/* Login page route */}
-        <Route path="/signup" element={<SignUp />} /> {/* Login page route */}
-        <Route path="/welcome" element={<Welcome />} />{" "}
-        {/* Welcome screen route */}
-        <Route path="/FoodForm" element={<FoodForm />} />
-        <Route path="/FoodDashBoard" element={<FoodDashboard />} />
-        <Route path="/FoodTimeTable" element={<FoodTimeTable />} />
-        <Route path="/ExpensesDashboard" element={<ExpensesDashboard />} />{" "}
-        {/* Food form route */}
-      </Routes>
+      
       <Footer /> {/* Footer placed outside the Routes */}
     </Router>
   </StrictMode>

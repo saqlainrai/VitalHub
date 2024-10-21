@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 // src/pages/HomePage.js
 
 import FeaturesSection from "../components/landing/FeatureSection";
