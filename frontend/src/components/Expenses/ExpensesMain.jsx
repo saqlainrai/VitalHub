@@ -24,7 +24,7 @@ const ExpensesMain = () => {
       reference: "EXP002",
     },
     {
-      id: 1,
+      id: 3,
       date: "2024-10-01",
       amount: 150,
       type: "Income",
@@ -32,7 +32,7 @@ const ExpensesMain = () => {
       reference: "INV001",
     },
     {
-      id: 2,
+      id: 4,
       date: "2024-10-05",
       amount: 50,
       type: "Expense",
@@ -40,7 +40,7 @@ const ExpensesMain = () => {
       reference: "EXP002",
     },
     {
-      id: 1,
+      id: 5,
       date: "2024-10-01",
       amount: 150,
       type: "Income",
@@ -48,7 +48,7 @@ const ExpensesMain = () => {
       reference: "INV001",
     },
     {
-      id: 2,
+      id: 6,
       date: "2024-10-05",
       amount: 50,
       type: "Expense",
@@ -56,7 +56,7 @@ const ExpensesMain = () => {
       reference: "EXP002",
     },
     {
-      id: 1,
+      id: 7,
       date: "2024-10-01",
       amount: 150,
       type: "Income",
@@ -64,7 +64,7 @@ const ExpensesMain = () => {
       reference: "INV001",
     },
     {
-      id: 2,
+      id: 8,
       date: "2024-10-05",
       amount: 50,
       type: "Expense",
