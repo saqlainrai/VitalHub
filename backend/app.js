@@ -3,7 +3,11 @@ const app = express();
 const mongoose = require("mongoose");
 require("dotenv").config();
 
-let Password = require("./models/password");
+let User = require('./models/user');
+let Password = require('./models/password');
+let Food = require('./models/food');
+const articleRouter = require('./routes/articles.js');
+
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -16,14 +20,22 @@ main()
   });
 
 async function main() {
-  await mongoose.connect(MONGO_URL);
+    // await mongoose.connect(MONGO_URL);
 }
 
-app.get("/passwords", async (req, res) => {
-  let u = mongoose.model("user", new mongoose.Schema({}));
-  let d = await u.find();
-  let passwords = await Password.find();
-  res.json(d);
+// app.get('/users', async (req, res) => {
+//     let users = await User.find({}).select('username email hash salt');;
+//     res.json(users);
+// });
+
+app.use('/api/articles', articleRouter);
+
+app.get("/app", (req, res) => {
+    res.redirect("http://localhost:5173");
+});
+
+app.get('*', (req, res) => {
+    res.send("404 Page Not Found");
 });
 
 app.get("/", (req, res) => {
