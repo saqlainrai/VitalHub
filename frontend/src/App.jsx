@@ -12,7 +12,7 @@ import './style.css'
 
 const App = () => {
     return (
-        <Router>
+        <>
             <Navbar />
             <div style={{ display: 'flex' }}>
                 {/* <Sidebar /> */}
@@ -30,7 +30,7 @@ const App = () => {
                     <div className="right"><BMI /></div>
                 </div>
             </div>
-        </Router>
+        </>
     );
 };
 

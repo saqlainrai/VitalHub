@@ -4,7 +4,7 @@ import './BMI.css'
 
 const BMI = () => {
     return (
-        <div className='container'>
+        <div className='containerBMI'>
             <div className="bar">
                 <div className="ball"></div>
             </div>
