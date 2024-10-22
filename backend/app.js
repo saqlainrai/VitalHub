@@ -36,7 +36,34 @@ app.get("/app", (req, res) => {
 
 app.get("/api/data", (req, res) => {
   console.log("The Request is received!!!")
-  res.json({ message: "Data Route is Working!" });
+  data = [
+    {
+      name: "Push-ups",
+      progressValue: 40,
+      totalValue: 50
+    },
+    {
+      name: "Sit-ups",
+      progressValue: 30,
+      totalValue: 50
+    },
+    {
+      name: "Squats",
+      progressValue: 20,
+      totalValue: 50
+    },
+    {
+      name: "Pull-ups",
+      progressValue: 10,
+      totalValue: 50
+    },
+    {
+      name: "Sprints",
+      progressValue: 25,
+      totalValue: 50
+    }
+  ]
+  res.send(data);
 });
 
 app.get('*', (req, res) => {

@@ -55,12 +55,11 @@ const App = () => {
                         <Route path="/reports" element={<Reports />} />
                     </Routes>
                 </main> */}
-                <div className="data">{data.message}</div>
                 <div className='parent'>
                     <div className="left">
                         <div className="exercise"><ApexChartArea/></div>
                         <div className="calories">
-                            <ExerciseList/>
+                            <ExerciseList data={data}/>
                         </div>
                     </div>
                     <div className="right"><BMI /></div>
