@@ -35,6 +35,8 @@ app.get("/app", (req, res) => {
 });
 
 app.get("/api/data", (req, res) => {
+  const {id} = req.query;
+  
   console.log("The Request is received!!!")
   data = [
     {
