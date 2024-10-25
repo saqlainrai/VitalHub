@@ -135,8 +135,112 @@ const foods = [
   }
 ];
 
+const exercises = [
+  {
+    "name": "Running",
+    "type": "Cardiovascular",
+    "calories_per_unit": 10
+  },
+  {
+    "name": "Cycling",
+    "type": "Cardiovascular",
+    "calories_per_unit": 8
+  },
+  {
+    "name": "Jump Rope",
+    "type": "Cardiovascular",
+    "calories_per_unit": 12
+  },
+  {
+    "name": "Swimming",
+    "type": "Cardiovascular",
+    "calories_per_unit": 9
+  },
+  {
+    "name": "Rowing",
+    "type": "Cardiovascular",
+    "calories_per_unit": 7
+  },
+  {
+    "name": "Stair Climbing",
+    "type": "Cardiovascular",
+    "calories_per_unit": 11
+  },
+  {
+    "name": "Elliptical Machine",
+    "type": "Cardiovascular",
+    "calories_per_unit": 7
+  },
+  {
+    "name": "Dancing",
+    "type": "Cardiovascular",
+    "calories_per_unit": 6
+  },
+  {
+    "name": "Hiking",
+    "type": "Cardiovascular",
+    "calories_per_unit": 8
+  },
+  {
+    "name": "Jumping Jacks",
+    "type": "Cardiovascular",
+    "calories_per_unit": 9
+  },
+  {
+    "name": "Bench Press",
+    "type": "Strength",
+    "calories_per_unit": 0.5
+  },
+  {
+    "name": "Squats",
+    "type": "Strength",
+    "calories_per_unit": 0.32
+  },
+  {
+    "name": "Deadlift",
+    "type": "Strength",
+    "calories_per_unit": 0.55
+  },
+  {
+    "name": "Pull Ups",
+    "type": "Strength",
+    "calories_per_unit": 0.8
+  },
+  {
+    "name": "Push Ups",
+    "type": "Strength",
+    "calories_per_unit": 0.29
+  },
+  {
+    "name": "Lunges",
+    "type": "Strength",
+    "calories_per_unit": 0.25
+  },
+  {
+    "name": "Bicep Curls",
+    "type": "Strength",
+    "calories_per_unit": 0.18
+  },
+  {
+    "name": "Tricep Dips",
+    "type": "Strength",
+    "calories_per_unit": 0.21
+  },
+  {
+    "name": "Shoulder Press",
+    "type": "Strength",
+    "calories_per_unit": 0.23
+  },
+  {
+    "name": "Leg Press",
+    "type": "Strength",
+    "calories_per_unit": 0.45
+  }
+]
+
 module.exports = {
   users,
   passwords,
-  foods
+  foods,
+  exercises
 };

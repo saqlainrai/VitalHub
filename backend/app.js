@@ -34,7 +34,7 @@ app.get("/app", (req, res) => {
     res.redirect("http://localhost:5173");
 });
 
-app.get("/api/data", (req, res) => {
+app.get("/api/user/stats", (req, res) => {
   const {id} = req.query;
   
   console.log("The Request is received!!!")
@@ -61,11 +61,20 @@ app.get("/api/data", (req, res) => {
     },
     {
       name: "Sprints",
-      progressValue: 25,
+      progressValue: 20,
       totalValue: 50
     }
   ]
   res.send(data);
+});
+
+app.get('/api/user/exercise', (req, res) => {
+  const { date } = req.query;
+
+  console.log(date)
+  console.log("The Request is received for exercise!!!")
+  
+  res.send({'date': date});
 });
 
 app.get('*', (req, res) => {

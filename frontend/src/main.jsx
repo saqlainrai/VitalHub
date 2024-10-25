@@ -6,6 +6,7 @@ import Home from "./pages/Home.jsx"; // Import the Home page
 import Login from "./pages/LoginPage.jsx"; // Import the Login page
 import FoodDashboard from "./pages/FoodDashboard.jsx"; // Import the Login page
 import App from './App.jsx'
+import ExerciseDetails from "./pages/ExerciseDetails.jsx"; // Import the Exercise Details page
 
 import Welcome from "./components/WelcomeFoodFitness.jsx"; // Import the Welcome screen
 import FoodForm from "./components/CaloriesRequirmentForm.jsx"; // Import the food form

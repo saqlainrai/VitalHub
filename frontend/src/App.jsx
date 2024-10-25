@@ -20,7 +20,7 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch('/api/data');
+                const response = await fetch(`/api/user/stats?id=1`);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

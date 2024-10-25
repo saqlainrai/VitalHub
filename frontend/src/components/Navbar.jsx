@@ -8,7 +8,7 @@ const Navbar = () => {
       <ul className='header-list'>
         <li>Home</li>
         <li>Calories</li>
-        <li>Details</li>
+        <li>Diary</li>
         <li>Set Goals</li>
         <li>Articles</li>
         <li>Suggestions</li>
