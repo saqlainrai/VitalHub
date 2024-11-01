@@ -1,5 +1,5 @@
 // src/App.jsx
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Sidebar from './components/Sidebar';
@@ -17,15 +17,46 @@ const App = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
+    let d = [
+        {
+            name: "Push-ups",
+            progressValue: 0,
+            totalValue: 50
+        },
+        {
+            name: "Sit-ups",
+            progressValue: 0,
+            totalValue: 50
+        },
+        {
+            name: "Squats",
+            progressValue: 0,
+            totalValue: 50
+        },
+        {
+            name: "Pull-ups",
+            progressValue: 0,
+            totalValue: 50
+        },
+        {
+            name: "Sprints",
+            progressValue: 0,
+            totalValue: 50
+        }
+    ];
+    
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const response = await fetch(`/api/user/stats?id=1`);
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    // throw new Error('Network response was not ok');
+                    setData(d);
                 }
-                const jsonData = await response.json();
-                setData(jsonData);
+                else {
+                    const jsonData = await response.json();
+                    setData(jsonData);
+                }
             } catch (error) {
                 setError(error.message);
             } finally {
@@ -57,9 +88,9 @@ const App = () => {
                 </main> */}
                 <div className='parent'>
                     <div className="left">
-                        <div className="exercise"><ApexChartArea/></div>
+                        <div className="exercise"><ApexChartArea /></div>
                         <div className="calories">
-                            <ExerciseList data={data}/>
+                            <ExerciseList data={data} />
                         </div>
                     </div>
                     <div className="right"><BMI /></div>
