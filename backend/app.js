@@ -7,7 +7,7 @@ let User = require('./models/user');
 let Password = require('./models/password');
 let Food = require('./models/food');
 const articleRouter = require('./routes/articles.js');
-
+const userRouter = require('./routes/user.js');
 
 const MONGO_URL = process.env.MONGO_URL;
 
@@ -20,7 +20,7 @@ main()
   });
 
 async function main() {
-    // await mongoose.connect(MONGO_URL);
+  await mongoose.connect(MONGO_URL);
 }
 
 // app.get('/users', async (req, res) => {
@@ -30,51 +30,10 @@ async function main() {
 
 app.use('/api/articles', articleRouter);
 
+app.use('/api/user', userRouter);
+
 app.get("/app", (req, res) => {
     res.redirect("http://localhost:5173");
-});
-
-app.get("/api/user/stats", (req, res) => {
-  const {id} = req.query;
-  
-  console.log("The Request is received!!!")
-  data = [
-    {
-      name: "Push-ups",
-      progressValue: 40,
-      totalValue: 50
-    },
-    {
-      name: "Sit-ups",
-      progressValue: 30,
-      totalValue: 50
-    },
-    {
-      name: "Squats",
-      progressValue: 20,
-      totalValue: 50
-    },
-    {
-      name: "Pull-ups",
-      progressValue: 10,
-      totalValue: 50
-    },
-    {
-      name: "Sprints",
-      progressValue: 20,
-      totalValue: 50
-    }
-  ]
-  res.send(data);
-});
-
-app.get('/api/user/exercise', (req, res) => {
-  const { date } = req.query;
-
-  console.log(date)
-  console.log("The Request is received for exercise!!!")
-  
-  res.send({'date': date});
 });
 
 app.get('*', (req, res) => {
