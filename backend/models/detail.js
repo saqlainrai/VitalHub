@@ -1,6 +1,8 @@
 
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const User = require('./user')
+const Exercise = require('./exercise')
 
 const detailSchema = new Schema({
     userId: {
@@ -30,6 +32,16 @@ const detailSchema = new Schema({
         enum: ['lose', 'gain', 'maintain'],
         required: true
     },
+    exerciseGoal: [{
+        exerciseId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'exercise',
+            required: true
+        },
+        duration: Number,
+        sets: Number,
+        reps: Number
+    }],
     calories: Number,
 });
 
