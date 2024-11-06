@@ -38,9 +38,14 @@ const detailSchema = new Schema({
             ref: 'exercise',
             required: true
         },
-        duration: Number,
-        sets: Number,
-        reps: Number
+        totalValue: {
+            type: Number,
+            required: true
+        },
+        progressValue: {
+            type: Number,
+            default: 0
+        }
     }],
     calories: Number,
 });

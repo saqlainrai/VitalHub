@@ -44,27 +44,24 @@ router.get("/stats", (req, res) => {
 });
 
 router.get('/details', async (req, res) => {
-    let {id} = req.query;
+    let { id } = req.query;
     id = '6712b613abfb4ad85f770072'
-    let user = await User.findById(id)
-    res.json(user);
-});
-
-let l = async (req, res) => {
     // let details = await Detail.find({}).populate('userId').populate('exerciseGoal.exerciseId').exec()
-    let details = await Detail.find({})
+    let details = await Detail.find({userId: id})
     .populate('userId')
     .populate({
-        path: 'exerciseGoal.exerciseId',
+        path: 'exerciseGoal',
         populate: {
             path: 'exerciseId',
             model: 'exercise'
         }
     })
     .exec();
-    console.log(details);
-};
-l();
+    let data = details[0].toObject();
+    data.bmi = details[0].weight / ((details[0].height / 100) ** 2);      // We are storing in cm's
+    res.json(data);
+});
+
 router.get('/save', async (req, res) => {
     let obj = { 
         userId: new mongoose.Types.ObjectId('6712b613abfb4ad85f770072'),
@@ -76,7 +73,19 @@ router.get('/save', async (req, res) => {
         exerciseGoal: [
             {
                 exerciseId: new mongoose.Types.ObjectId('671abfb0c4372fc417564f94'),
-                duration: 10
+                totalValue: 50
+            },
+            {
+                exerciseId: new mongoose.Types.ObjectId('671abfb0c4372fc417564f9e'),
+                totalValue: 20
+            },
+            {
+                exerciseId: new mongoose.Types.ObjectId('671abfb0c4372fc417564f98'),
+                totalValue: 30
+            },
+            {
+                exerciseId: new mongoose.Types.ObjectId('671abfb0c4372fc417564f95'),
+                totalValue: 40
             }
         ],
         calories: 1200
@@ -90,7 +99,11 @@ router.get('/save', async (req, res) => {
         res.send("Error");
     }
 });
-
+async function name() {
+    let r = await Detail.deleteMany()
+    console.log("Done")
+}
+// name()
 router.get('/exercise', (req, res) => {
     const { date } = req.query;
 
