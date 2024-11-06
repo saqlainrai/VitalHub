@@ -20,7 +20,7 @@ import './style.css'
 
 // Render the application with routing
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
+  // <StrictMode>
     <Router>
       <NavbarMain /> {/* Navbar that will persist across all pages */}
       {/* Define the Routes */}
@@ -39,5 +39,5 @@ createRoot(document.getElementById("root")).render(
       {/* Food form route */}
       <Footer /> {/* Footer placed outside the Routes */}
     </Router>
-  </StrictMode>
+  // </StrictMode>
 );

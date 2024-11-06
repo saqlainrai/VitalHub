@@ -22,10 +22,10 @@ const ProgressBar = ({ props }) => {
 };
 
 // PropTypes for type checking
-ProgressBar.propTypes = {
-    progressValue: PropTypes.number.isRequired,
-    totalValue: PropTypes.number.isRequired,
-    color: PropTypes.string,
-};
+// ProgressBar.propTypes = {
+//     progressValue: PropTypes.number.isRequired,
+//     totalValue: PropTypes.number.isRequired,
+//     color: PropTypes.string,
+// };
 
 export default ProgressBar;

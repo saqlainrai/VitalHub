@@ -9,18 +9,17 @@ const ExerciseList = ({data}) => {
         { name: 'Squats', progressValue: 15, totalValue: 40, color: '#ff5733' },
         // Add more exercises as needed
     ];
-    console.log("The data is: ", data);
+    // console.log("The data is: ", data);
 
     for (const d of data) {
-        d.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);
-        ;                  // adding random color
+        d.color = '#'+(Math.random()*0xFFFFFF<<0).toString(16);   // adding random color
     }
 
     return (
         <div className="calories">
             {data.map((exercise, index) => (
                 <div className="row" key={index}>
-                    <p>{exercise.name}</p>
+                    <p>{exercise.exerciseId.name}</p>
                     <ProgressBar props = {exercise} />
                 </div>
             ))}

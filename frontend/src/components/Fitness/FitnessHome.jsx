@@ -46,16 +46,18 @@ const App = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch(`/api/user/stats?id=1`);
+                const response = await fetch(`/api/user/details?id=1`);
                 if (!response.ok) {
                     // throw new Error('Network response was not ok');
                     setData(d);
                 }
                 else {
                     const jsonData = await response.json();
-                    setData(jsonData);
+                    // console.log('This is current received data', jsonData)
+                    setData(jsonData.exerciseGoal);
                 }
             } catch (error) {
+                console.log(error)
                 setError(error.message);
             } finally {
                 setLoading(false);
