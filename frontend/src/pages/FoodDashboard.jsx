@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import  { useState } from "react";
 import FoodAttendance from "../components/FoodDashboard/FoodAttendence"; // Make sure to import the new component
+import { useNavigate } from "react-router-dom"; // Import useNavigate
 
 const Dashboard = () => {
+  const navigate = useNavigate(); // Initialize the useNavigate hook
+
   // Static values to be changed by your conditions
   const calorieGoal = 2000;
   const initialCaloriesConsumed = 1200; // This will be updated based on attendance
@@ -18,6 +21,10 @@ const Dashboard = () => {
   // Calculating remaining calories
   const remainingCalories =
     calorieGoal - caloriesConsumed + exerciseCaloriesBurned;
+
+  const handleFoodTimetableClick = () => {
+    navigate("/FoodTimeTable"); // Redirect to /fooddiary when the button is clicked
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -97,7 +104,10 @@ const Dashboard = () => {
 
         {/* My Food Timetable Button */}
         <div className="text-center mb-8">
-          <button className="bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300">
+          <button
+            onClick={handleFoodTimetableClick} // Add onClick handler
+            className="bg-blue-600 text-white py-3 px-6 rounded-lg text-lg font-semibold hover:bg-blue-700 transition duration-300"
+          >
             My Food Timetable
           </button>
         </div>

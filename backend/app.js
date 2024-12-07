@@ -1,11 +1,18 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
+const cors = require("cors");
 require("dotenv").config();
 
 let Password = require("./models/password");
-
+const foodRoutes = require("./routes/foodTableRoutes");
 const MONGO_URL = process.env.MONGO_URL;
+const port = 5000;
+
+// Middleware
+app.use(bodyParser.json());
+app.use(cors());
 
 main()
   .then(() => {
@@ -19,6 +26,8 @@ async function main() {
   await mongoose.connect(MONGO_URL);
 }
 
+// Routes
+app.use('/api', foodRoutes);
 app.get("/passwords", async (req, res) => {
   let u = mongoose.model("user", new mongoose.Schema({}));
   let d = await u.find();
@@ -31,6 +40,6 @@ app.get("/", (req, res) => {
   res.send("The Route is Working!");
 });
 
-app.listen(8080, () => {
-  console.log("Server is running at port 8080");
+app.listen(port, () => {
+  console.log(`Server running on http://localhost:${port}`);
 });

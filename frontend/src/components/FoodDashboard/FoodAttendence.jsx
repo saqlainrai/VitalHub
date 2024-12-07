@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-// Mock data for food items categorized by meal (replace with your database call)
+// Mock food data
 const foodItems = {
   Breakfast: [
     { id: 1, name: "Oatmeal", calories: 150 },
@@ -34,7 +34,6 @@ const FoodAttendance = ({ setCaloriesConsumed }) => {
 
     setSelectedFoods(updatedSelectedFoods);
 
-    // Calculate total calories
     const totalCalories = updatedSelectedFoods.reduce((total, id) => {
       const foodItem = Object.values(foodItems)
         .flat()
@@ -42,45 +41,69 @@ const FoodAttendance = ({ setCaloriesConsumed }) => {
       return total + (foodItem ? foodItem.calories : 0);
     }, 0);
 
-    // Update calories consumed in the parent component
     setCaloriesConsumed(totalCalories);
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
-      <h3 className="text-2xl font-semibold text-gray-800 mb-4">
-        Food Eaten Today
-      </h3>
+    <div className="bg-white rounded-lg shadow-xl p-6 mb-8 max-w-7xl mx-auto">
+      {/* Title Section */}
+      <div className="text-center mb-6">
+        <h3 className="text-3xl font-bold text-gray-800">Track Your Meals</h3>
+        <p className="text-gray-600 mt-1">
+          Select meals to track your daily calorie intake
+        </p>
+      </div>
 
-      {Object.entries(foodItems).map(([meal, foods]) => (
-        <div key={meal} className="mb-6">
-          <h4 className="text-xl font-semibold text-gray-700 mb-2 border-b pb-2">
-            {meal}
-          </h4>
-          <ul className="space-y-4">
-            {foods.map((food) => (
-              <li
-                key={food.id}
-                className="flex items-center justify-between p-4 bg-gray-100 rounded-lg hover:bg-gray-200 transition duration-300"
-              >
-                <div className="flex items-center">
-                  <input
-                    type="checkbox"
-                    id={food.id}
-                    checked={selectedFoods.includes(food.id)}
-                    onChange={() => handleFoodChange(food)}
-                    className="mr-3 h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-                  />
-                  <label htmlFor={food.id} className="text-gray-800">
-                    {food.name}
-                  </label>
+      {/* Grid with food categories */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {Object.entries(foodItems).map(([meal, foods]) => (
+          <div
+            key={meal}
+            className="bg-blue-50 border border-blue-200 shadow-md rounded-lg transform hover:scale-105 transition-transform duration-200"
+          >
+            <div className="p-4 border-b bg-blue-100 text-lg font-semibold text-gray-700 text-center">
+              {meal}
+            </div>
+            <ul className="p-3 space-y-3">
+              {foods.map((food) => (
+                <div
+                  key={food.id}
+                  className="flex items-center justify-between bg-white shadow-sm p-2 mb-2 rounded-md hover:bg-blue-50 cursor-pointer transition duration-200"
+                >
+                  <div className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={selectedFoods.includes(food.id)}
+                      onChange={() => handleFoodChange(food)}
+                      className="h-5 w-5 text-blue-600"
+                    />
+                    <span className="ml-2 text-gray-700">{food.name}</span>
+                  </div>
+                  <span className="text-gray-600 font-semibold">
+                    {food.calories} kcal
+                  </span>
                 </div>
-                <span className="text-gray-600">{food.calories} kcal</span>
-              </li>
-            ))}
-          </ul>
-        </div>
-      ))}
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      {/* Calories Counter Section */}
+      <div className="mt-8 p-4 bg-gray-100 rounded-lg shadow-inner text-center">
+        <p className="text-xl font-semibold text-gray-800 mb-2">
+          Total Calories Consumed:
+        </p>
+        <span className="text-3xl font-bold text-blue-600">
+          {selectedFoods.reduce((total, id) => {
+            const food = Object.values(foodItems)
+              .flat()
+              .find((item) => item.id === id);
+            return total + (food ? food.calories : 0);
+          }, 0)}{" "}
+          kcal
+        </span>
+      </div>
     </div>
   );
 };

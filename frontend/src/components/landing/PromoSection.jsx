@@ -1,4 +1,4 @@
-import PromoPic from '../../../public/PromoPic.jpg'
+import PromoPic from '../../../public/promoPic.jpg'
 
 const PromoSection = () => {
   return (
