@@ -17,27 +17,37 @@ const App = () => {
 
     let d = [
         {
-            name: "Push-ups",
+            exerciseId: {
+                name: "Push-ups",
+            },
             progressValue: 0,
             totalValue: 50
         },
         {
-            name: "Sit-ups",
+            exerciseId: {
+                name: "Sit-ups"
+            },
             progressValue: 0,
             totalValue: 50
         },
         {
-            name: "Squats",
+            exerciseId: {
+                name: "Squats"
+            },
             progressValue: 0,
             totalValue: 50
         },
         {
-            name: "Pull-ups",
+            exerciseId: {
+                name: "Pull-ups"
+            },
             progressValue: 0,
             totalValue: 50
         },
         {
-            name: "Sprints",
+            exerciseId: {
+                name: "Sprints"
+            },
             progressValue: 0,
             totalValue: 50
         }
