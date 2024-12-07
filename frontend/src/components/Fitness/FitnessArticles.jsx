@@ -64,10 +64,14 @@ const Error = styled.p`
 const ArticleDashboard = () => {
     const [articles, setArticles] = useState([
         {
-            id: 1,
-            imageUrl: 'h',
-            title: "Heloo",
-            description: 'G'
+          source : {
+            id: 1
+          },
+          id: 1,
+          url: '1',
+          urlToImage: 'h',
+          title: "Heloo",
+          content: 'G'
         }
     ]);
     const [loading, setLoading] = useState(true);
@@ -79,7 +83,9 @@ const ArticleDashboard = () => {
             try {
                 const response = await fetch('/api/articles/data'); // Replace with your API endpoint
                 const jsonData = await response.json();
-                setArticles(jsonData);
+                if (jsonData.length > 0) {
+                  setArticles(jsonData);
+                }
                 setLoading(false);
             } catch (err) {
                 setError('Error fetching articles');
