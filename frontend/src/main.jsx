@@ -20,7 +20,7 @@ import SignUp from "./pages/SignUp.jsx";
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <Router>
-      {/* <NavbarMain />  */}
+      <NavbarMain /> 
       {/* Define the Routes */}
       <Routes>
         <Route path="/" element={<Home />} /> {/* Home page route */}
@@ -35,7 +35,7 @@ createRoot(document.getElementById("root")).render(
         {/* Food form route */}
       </Routes>
        {/* Footer placed outside the Routes */}
-       {/* <Footer/> */}
+       <Footer/>
     </Router>
   </StrictMode>
 );
