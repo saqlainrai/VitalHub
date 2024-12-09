@@ -1,5 +1,9 @@
 
+<<<<<<< HEAD
 import Login from '../components/login.jsx'
+=======
+import Login from '../components/login'
+>>>>>>> tabish
 
 
 const LoginPage = () => {

@@ -3,7 +3,7 @@ import { createRoot } from "react-dom/client";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Router components
 import NavbarMain from "./components/NavbarMain.jsx";
 import Home from "./pages/Home.jsx"; // Import the Home page
-import Login from "./pages/LoginPage.jsx"; // Import the Login page
+import Login from "../src/components/Login.jsx"; // Import the Login page
 import FoodDashboard from "./pages/FoodDashboard.jsx"; // Import the Login page
 // import App from './App.jsx'
 import FitnessDashboard from './pages/FitnessDashboard.jsx'
@@ -18,11 +18,12 @@ import ExpensesDashboard from "./pages/ExpensesDashboard.jsx";
 import SignUp from "./pages/SignUp.jsx";
 import './style.css'
 
+
 // Render the application with routing
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
     <Router>
-      <NavbarMain /> {/* Navbar that will persist across all pages */}
+      <NavbarMain /> 
       {/* Define the Routes */}
       <Routes>
         <Route path="/" element={<Home />} /> {/* Home page route */}
@@ -41,3 +42,4 @@ createRoot(document.getElementById("root")).render(
     </Router>
   // </StrictMode>
 );
+
