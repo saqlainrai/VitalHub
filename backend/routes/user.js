@@ -4,6 +4,7 @@ const router = express.Router();
 let User = require('../models/user');
 let Detail = require('../models/detail');
 const mongoose = require("mongoose");
+const ExerciseLog = require('../models/exerciseLog');
 // const ObjectId = new mongoose.Types.ObjectId;
 // const {ObjectId} = require('mongoose');
 
@@ -47,23 +48,23 @@ router.get('/details', async (req, res) => {
     let { id } = req.query;
     id = '6712b613abfb4ad85f770072'
     // let details = await Detail.find({}).populate('userId').populate('exerciseGoal.exerciseId').exec()
-    let details = await Detail.find({userId: id})
-    .populate('userId')
-    .populate({
-        path: 'exerciseGoal',
-        populate: {
-            path: 'exerciseId',
-            model: 'exercise'
-        }
-    })
-    .exec();
+    let details = await Detail.find({ userId: id })
+        .populate('userId')
+        .populate({
+            path: 'exerciseGoal',
+            populate: {
+                path: 'exerciseId',
+                model: 'exercise'
+            }
+        })
+        .exec();
     let data = details[0].toObject();
     data.bmi = details[0].weight / ((details[0].height / 100) ** 2);      // We are storing in cm's
     res.json(data);
 });
 
 router.get('/save', async (req, res) => {
-    let obj = { 
+    let obj = {
         userId: new mongoose.Types.ObjectId('6712b613abfb4ad85f770072'),
         dob: '12-08-2003',
         height: 5.9,
@@ -104,13 +105,30 @@ async function name() {
     console.log("Done")
 }
 // name()
-router.get('/exercise', (req, res) => {
+router.get('/exercise', async (req, res) => {
     const { date } = req.query;
-
-    console.log(date)
-    console.log("The Request is received for exercise!!!")
-
-    res.send({ 'date': date });
+    let { id } = req.query;                             // will be already available for backend
+    id = '6712b613abfb4ad85f770072'
+    const [day, month, year] = date.split('/');
+    const dateObject = `${year}-${month}-${day}T00:00:00.000Z`;
+    let details = await ExerciseLog.find({ userId: id, date: dateObject});
+    if (details.length) {
+        let data = await ExerciseLog.findOne({ userId: id, date: dateObject })
+            .populate('userId')
+            .populate({
+                path: 'cardiovascular.exerciseId',
+                model: 'exercise',
+            })
+            .populate({
+                path: 'strength.exerciseId',
+                model: 'exercise',
+            })
+            .exec();
+            res.json(data);
+    }
+    else {
+        res.json([]);
+    }
 });
 
 module.exports = router;
