@@ -37,13 +37,8 @@ createRoot(document.getElementById("root")).render(
         <Route path="/FoodTimeTable" element={<FoodTimeTable />} />
         <Route path="/ExpensesDashboard" element={<ExpensesDashboard />} />{" "}
       </Routes>
-<<<<<<< HEAD
        {/* Footer placed outside the Routes */}
        <Footer/>
-=======
-      {/* Food form route */}
-      <Footer /> {/* Footer placed outside the Routes */}
->>>>>>> 9f937ed94fe1daec786a1579833c7e4eba28b79c
     </Router>
   // </StrictMode>
 );
