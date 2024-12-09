@@ -14,34 +14,34 @@ const validDays = [
 ];
 
 // Initialize the database
-router.post("/initialize-food", async (req, res) => {
-  const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"];
-  const entries = [];
+// router.post("/initialize-food", async (req, res) => {
+//   const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"];
+//   const entries = [];
 
-  try {
-    validDays.forEach((day) => {
-      mealTypes.forEach((mealType) => {
-        entries.push({
-          day,
-          mealType,
-          name: [],
-          calories: [],
-          fats: [],
-          protein: [],
-          sugars: [],
-        });
-      });
-    });
+//   try {
+//     validDays.forEach((day) => {
+//       mealTypes.forEach((mealType) => {
+//         entries.push({
+//           day,
+//           mealType,
+//           name: [],
+//           calories: [],
+//           fats: [],
+//           protein: [],
+//           sugars: [],
+//         });
+//       });
+//     });
 
-    await FoodItem.insertMany(entries);
-    res
-      .status(201)
-      .json({ message: "Food items initialized successfully", data: entries });
-  } catch (error) {
-    console.error("Error initializing food items:", error);
-    res.status(500).json({ error: "Failed to initialize food items." });
-  }
-});
+//     await FoodItem.insertMany(entries);
+//     res
+//       .status(201)
+//       .json({ message: "Food items initialized successfully", data: entries });
+//   } catch (error) {
+//     console.error("Error initializing food items:", error);
+//     res.status(500).json({ error: "Failed to initialize food items." });
+//   }
+// });
 
 // router.post("/add-food", async (req, res) => {
 //   const { day, mealType, name, calories, fats, protein, sugars } = req.body;
