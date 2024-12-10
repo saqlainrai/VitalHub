@@ -8,6 +8,8 @@ import FitnessGoal from '../components/Fitness/FitnessGoal'
 import FitnessArticles from '../components/Fitness/FitnessArticles'
 import FitnessSuggestions from '../components/Fitness/FitnessSuggestions'
 
+import FoodDashboard from './FoodDashboard'
+
 const ExpensesDashboard = () => {
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [activeComponent, setActiveComponent] = useState("FitnessHome"); // Track which component to show
@@ -29,7 +31,7 @@ const ExpensesDashboard = () => {
                     <FitnessHome onAddExpenseClick={() => setIsFormVisible(true)} />
                 );
             case "FitnessCalories":
-                return <FitnessCalories />; // Placeholder for the Reports component
+                return <FoodDashboard attendance={false} />; // Placeholder for the Reports component
 
             case "FitnessDiary":
                 return <FitnessDiary />;

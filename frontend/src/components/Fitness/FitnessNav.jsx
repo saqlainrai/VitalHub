@@ -31,12 +31,12 @@ const ExpensesNav = ({ setActiveComponent }) => {
                     >
                         Diary
                     </a>
-                    <a
+                    {/* <a
                         onClick={() => handleNavigation("FitnessGoal")}
                         className="cursor-pointer hover:text-gray-400"
                     >
                         Set Goal
-                    </a>
+                    </a> */}
                     <a
                         onClick={() => handleNavigation("FitnessArticles")}
                         className="cursor-pointer hover:text-gray-400"
@@ -52,13 +52,13 @@ const ExpensesNav = ({ setActiveComponent }) => {
                 </div>
 
                 {/* Right-side Button */}
-                <div>
-                    <button
+                <div style={{marginLeft: '20px', width: '20px'}}>
+                    {/* <button
                         className="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded"
                         onClick={() => setActiveComponent("ExpenseForm")}
                     >
                         Add Expense
-                    </button>
+                    </button> */}
                 </div>
             </div>
         </nav>
