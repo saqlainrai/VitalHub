@@ -14,7 +14,7 @@
 .prev {
     width: 30px;
     /* height: 100%; */
-    background-color: blue;
+    background-color: #588157;
     display: block;
     border-radius: 5px;
 }
@@ -23,7 +23,7 @@
     display: block;
     width: 30px;
     /* height: 100%; */
-    background-color: blue;
+    background-color: #588157;
     border-radius: 5px;
 }
 
@@ -42,7 +42,7 @@
 
 .addv {
     width: 200px;
-    background-color: aqua;
+    background-color: transparent;
     margin-left: 20px;
 }
 .mid {
@@ -73,7 +73,7 @@
 
 .btn {
     color: white;
-    background-color: blue;
+    background-color: #3a5a40;
     margin: 5px;
     /* padding: 2px 5px; */
     width: 150px;
@@ -118,4 +118,25 @@
     display: flex;
     justify-content: center;
     height: 25vh;
+}
+
+.space {
+    border-top: 2px solid #1a4124;
+    margin: 10px 0px;
+    margin-bottom: 20px;
+}
+
+.bold {
+    font-weight: bold;
+    padding-right: 20px;
+}
+
+.boldBack {
+    background-color: #868b86;
+    color: black;
+    font-weight: bold;
+    padding: 5px 2px;
+    border-radius: 2px;
+    border: 1px solid white;
+    /* margin: 2px; */
 }

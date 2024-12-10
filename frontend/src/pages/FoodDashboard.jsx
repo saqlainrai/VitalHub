@@ -2,7 +2,7 @@ import  { useState } from "react";
 import FoodAttendance from "../components/FoodDashboard/FoodAttendence"; // Make sure to import the new component
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 
-const Dashboard = () => {
+const Dashboard = ({attendance=true}) => {
   const navigate = useNavigate(); // Initialize the useNavigate hook
 
   // Static values to be changed by your conditions
@@ -113,7 +113,7 @@ const Dashboard = () => {
         </div>
 
         {/* Food Attendance Section */}
-        <FoodAttendance setCaloriesConsumed={setCaloriesConsumed} />
+        {attendance && <FoodAttendance setCaloriesConsumed={setCaloriesConsumed} />}
       </div>
     </div>
   );

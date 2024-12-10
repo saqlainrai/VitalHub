@@ -6,7 +6,7 @@ import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 import Table from './Table.jsx'
 import './FitnessDiary.css'
 
-const App = ({ id }) => {
+const App = () => {
     let d = new Date();
     const [date, setDate] = useState(d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }));
     const [logs, setLogs] = useState({
@@ -25,7 +25,7 @@ const App = ({ id }) => {
             const d = new Date(date);
             const response = await fetch(`/api/user/exercise?date=${d.toLocaleDateString('en-GB')}`); // Replace with your API endpoint
             const jsonData = await response.json();
-            {console.log("JSON", jsonData)}
+            // {console.log("JSON", jsonData)}
             if (jsonData != []) {
                 setLogs({ ...jsonData });
             }
@@ -79,20 +79,24 @@ const App = ({ id }) => {
                     </button>
                 </div>
             </div>
+            <div className='space'> </div>
             <div className="mid">
                 <div className="cardivasular">
                     <DisplayExercise {...{
                         key: 789,
                         name: "Cardiovascular",
                         options: ['Minutes', 'Calories Burned'],
-                        data: logs.cardiovascular
+                        data: logs.cardiovascular,
+                        date: date,
+                        refresh: fetchLogs
                     }} />
                     <br />
                     <DisplayExercise {...{
                         key: 267,
                         name: "Strength Training",
                         options: ['Sets', 'Reps', 'Calories Burned'],
-                        data: logs.strength
+                        data: logs.strength,
+                        date: date
                     }} />
                     <form className='formNote'>
                         <div className="top">
@@ -100,10 +104,10 @@ const App = ({ id }) => {
                             <button id="noteBtn" type='submit'>Edit Note</button>
                         </div>
                         <textarea className='noteText' value={logs.note}></textarea>
-                        {console.log(logs)}
                     </form>
                 </div>
                 <div className="addv">
+                    <img src="/assets/v2.png" alt="Fitness Advertisement" />
                 </div>
             </div>
             <div className="horAdd">
