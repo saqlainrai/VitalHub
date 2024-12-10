@@ -14,34 +14,34 @@ const validDays = [
 ];
 
 // Initialize the database
-// router.post("/initialize-food", async (req, res) => {
-//   const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"];
-//   const entries = [];
+router.post("/initialize-food", async (req, res) => {
+  const mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"];
+  const entries = [];
 
-//   try {
-//     validDays.forEach((day) => {
-//       mealTypes.forEach((mealType) => {
-//         entries.push({
-//           day,
-//           mealType,
-//           name: [],
-//           calories: [],
-//           fats: [],
-//           protein: [],
-//           sugars: [],
-//         });
-//       });
-//     });
+  try {
+    validDays.forEach((day) => {
+      mealTypes.forEach((mealType) => {
+        entries.push({
+          day,
+          mealType,
+          name: [],
+          calories: [],
+          fats: [],
+          protein: [],
+          sugars: [],
+        });
+      });
+    });
 
-//     await FoodItem.insertMany(entries);
-//     res
-//       .status(201)
-//       .json({ message: "Food items initialized successfully", data: entries });
-//   } catch (error) {
-//     console.error("Error initializing food items:", error);
-//     res.status(500).json({ error: "Failed to initialize food items." });
-//   }
-// });
+    await FoodItem.insertMany(entries);
+    res
+      .status(201)
+      .json({ message: "Food items initialized successfully", data: entries });
+  } catch (error) {
+    console.error("Error initializing food items:", error);
+    res.status(500).json({ error: "Failed to initialize food items." });
+  }
+});
 
 // router.post("/add-food", async (req, res) => {
 //   const { day, mealType, name, calories, fats, protein, sugars } = req.body;
@@ -95,6 +95,7 @@ const validDays = [
 router.get("/get-food", async (req, res) => {
   try {
     const foodItems = await FoodItem.find();
+    console.log("Fetched Food Items:", foodItems); // Log the fetched data
     res.status(200).json(foodItems);
   } catch (error) {
     console.error("Error fetching food items:", error);
@@ -210,6 +211,59 @@ router.delete("/delete-food/:id", async (req, res) => {
   }
 });
 
+
+router.put("/add-update-food", async (req, res) => {
+  try {
+    console.log("Request payload:", req.body);
+
+    const { day, mealType, name, calories, fats, protein, sugars } = req.body;
+
+    if (!day || !mealType || !name) {
+      return res.status(400).json({ error: "Required fields are missing" });
+    }
+
+    // Look for existing food entry
+    const existingFood = await FoodItem.findOne({
+      day,
+      mealType,
+      name: name.toLowerCase(),
+    });
+
+    if (existingFood) {
+      console.log("Updating existing food entry.");
+      existingFood.calories = calories;
+      existingFood.fats = fats;
+      existingFood.protein = protein;
+      existingFood.sugars = sugars;
+      await existingFood.save();
+      return res
+        .status(200)
+        .json({ message: "Food updated successfully", data: existingFood });
+    }
+
+    // Create a new food entry if it doesn't exist
+    const newFoodEntry = new FoodItem({
+      day,
+      mealType,
+      name,
+      calories,
+      fats,
+      protein,
+      sugars,
+    });
+
+    console.log("Saving new food entry.");
+    const savedFood = await newFoodEntry.save();
+    return res
+      .status(201)
+      .json({ message: "Food created successfully", data: savedFood });
+  } catch (error) {
+    console.error("Error in add/update endpoint:", error);
+    return res
+      .status(500)
+      .json({ error: "Internal Server Error", details: error.message });
+  }
+});
 
 
 module.exports = router;

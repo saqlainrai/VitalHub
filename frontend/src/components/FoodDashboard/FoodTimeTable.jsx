@@ -7,14 +7,10 @@ const FoodTimeTable = () => {
   const [selectedDay, setSelectedDay] = useState("Monday");
   const [foodData, setFoodData] = useState(initialFoodData);
 
-  const [isPopupOpen, setIsPopupOpen] = useState(false);
-  const [popupType, setPopupType] = useState(""); // "add" or "update"
+  const [isAddPopupOpen, setIsAddPopupOpen] = useState(false);
+  const [isUpdatePopupOpen, setIsUpdatePopupOpen] = useState(false);
   const [currentMealType, setCurrentMealType] = useState("");
   const [currentFood, setCurrentFood] = useState(null);
-  
-  const n = () => {
-    window.location.reload(); // Refreshes the current page
-  };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -32,19 +28,26 @@ const FoodTimeTable = () => {
     try {
       const response = await axios.get("http://localhost:5000/api/get-food");
       const groupedData = response.data.reduce((acc, item) => {
-        const day = item.day;
+        const { day, mealType, _id, name, calories, fats, protein, sugars } =
+          item;
+
         if (!acc[day]) acc[day] = {};
-        if (!acc[day][item.mealType]) acc[day][item.mealType] = [];
-        acc[day][item.mealType].push({
-          id: item._id,
-          name: item.name[0],
-          calories: item.calories,
-          fats: item.fats,
-          protein: item.protein,
-          sugars: item.sugars,
+        if (!acc[day][mealType]) acc[day][mealType] = [];
+
+        name.forEach((foodName, index) => {
+          acc[day][mealType].push({
+            id: _id,
+            name: foodName,
+            calories: calories[index] || 0,
+            fats: fats[index] || 0,
+            protein: protein[index] || 0,
+            sugars: sugars[index] || 0,
+          });
         });
+
         return acc;
       }, {});
+
       setFoodData(groupedData);
     } catch (error) {
       console.error("Error fetching food data from server", error);
@@ -53,76 +56,91 @@ const FoodTimeTable = () => {
 
   const handleDayChange = (day) => setSelectedDay(day);
 
-  const handlePopupOpen = (type, mealType, food = null) => {
-    setPopupType(type);
+  const openAddPopup = (mealType = "") => {
     setCurrentMealType(mealType);
-    setCurrentFood(food);
-    setFormData(
-      food
-        ? { ...food }
-        : { name: "", calories: "", fats: "", protein: "", sugars: "" }
-    );
-    setIsPopupOpen(true);
+    setFormData({
+      day:"",
+      mealType:"",
+      name: "",
+      calories: "",
+      fats: "",
+      protein: "",
+      sugars: "",
+    });
+    setIsAddPopupOpen(true);
   };
 
-  const handlePopupClose = () => setIsPopupOpen(false);
+  const openUpdatePopup = (mealType, food) => {
+    setCurrentMealType(mealType);
+    setCurrentFood(food);
+    setFormData({ ...food });
+    setIsUpdatePopupOpen(true);
+  };
+
+  const closeAddPopup = () => setIsAddPopupOpen(false);
+  const closeUpdatePopup = () => setIsUpdatePopupOpen(false);
 
   const handleFormChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleFormSubmit = async () => {
-    if (popupType === "add") {
-      await addFood();
-    } else if (popupType === "update") {
-      await updateFood();
-    }
-    handlePopupClose();
-  };
-
-  const addFood = async () => {
+  const handleAddFood = async () => {
     try {
-      const newFood = {
-        day: selectedDay,
-        mealType: currentMealType,
-        name: [formData.name],
+      const payloadToSend = {
+        day: formData.day,
+        mealType: formData.mealType,
+        name: formData.name,
         calories: parseInt(formData.calories, 10),
         fats: parseInt(formData.fats, 10),
         protein: parseInt(formData.protein, 10),
         sugars: parseInt(formData.sugars, 10),
       };
-      await axios.post("http://localhost:5000/api/add-food", newFood);
+
+      console.log("Sending payload to server:", payloadToSend);
+
+      await axios.put(
+        `http://localhost:5000/api/add-update-food`,
+        payloadToSend
+      );
+
       fetchFoodData();
+      closeAddPopup();
     } catch (error) {
-      console.error("Error adding food", error);
+      console.error("Error sending food data:", error.response || error);
     }
   };
 
-  const updateFood = async () => {
+
+
+
+
+
+  const handleUpdateFood = async () => {
     try {
       const updatedFood = {
         name: [formData.name],
-        calories: parseInt(formData.calories, 10),
-        fats: parseInt(formData.fats, 10),
-        protein: parseInt(formData.protein, 10),
-        sugars: parseInt(formData.sugars, 10),
+        calories: [parseInt(formData.calories, 10)],
+        fats: [parseInt(formData.fats, 10)],
+        protein: [parseInt(formData.protein, 10)],
+        sugars: [parseInt(formData.sugars, 10)],
       };
+
       await axios.put(
         `http://localhost:5000/api/update-food/${currentFood.id}`,
         updatedFood
       );
+
       fetchFoodData();
+      closeUpdatePopup();
     } catch (error) {
-      console.error("Error updating food", error);
+      console.error("Error updating food:", error);
     }
   };
 
-
-
   const removeFood = async (mealType, id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/remove-food/${id}`);
+      await axios.delete(`http://localhost:5000/api/update-food/${id}`);
       setFoodData((prevData) => ({
         ...prevData,
         [selectedDay]: {
@@ -137,92 +155,84 @@ const FoodTimeTable = () => {
     }
   };
 
-  // const removeFood = async (foodId) => {
-  //   try {
-  //     await axios.delete(`http://localhost:5000/api/delete-food/${foodId}`);
-  //     fetchFoodData();
-  //   } catch (error) {
-  //     console.error("Error removing food", error);
-  //   }
-  // };
+  const renderMealSection = (mealType, mealName) => {
+    const mealData = foodData[selectedDay]?.[mealType] || [];
 
-  const renderMealSection = (mealType, mealName) => (
-    <div className="mt-4 bg-white p-4 rounded-lg shadow-md">
-      <h4 className="text-lg font-semibold text-gray-700 mb-2">{mealName}</h4>
-      <div className="overflow-x-auto">
-        <table className="min-w-full border border-gray-200 bg-white rounded-lg">
-          <thead className="bg-blue-100">
-            <tr>
-              {["Food", "Calories", "Fats", "Protein", "Sugars", "Actions"].map(
-                (header) => (
+    return (
+      <div className="mt-4 bg-white p-4 rounded-lg shadow-md">
+        <h4 className="text-lg font-semibold text-gray-700 mb-2">{mealName}</h4>
+        <div className="overflow-x-auto">
+          <table className="min-w-full border border-gray-200 bg-white rounded-lg">
+            <thead className="bg-blue-100">
+              <tr>
+                {[
+                  "Food",
+                  "Calories",
+                  "Fats",
+                  "Protein",
+                  "Sugars",
+                  "Actions",
+                ].map((header) => (
                   <th
                     key={header}
                     className="border px-3 py-2 text-sm font-medium text-gray-600 text-left"
                   >
                     {header}
                   </th>
-                )
-              )}
-            </tr>
-          </thead>
-          <tbody>
-            {foodData[selectedDay] &&
-            foodData[selectedDay][mealType] &&
-            foodData[selectedDay][mealType].length > 0 ? (
-              foodData[selectedDay][mealType].map((food) => (
-                <tr key={food.id} className="border-b hover:bg-blue-50">
-                  <td className="border px-3 py-2 text-gray-700">
-                    {food.name}
-                  </td>
-                  <td className="border px-3 py-2 text-gray-600">
-                    {food.calories}
-                  </td>
-                  <td className="border px-3 py-2 text-gray-600">
-                    {food.fats}
-                  </td>
-                  <td className="border px-3 py-2 text-gray-600">
-                    {food.protein}
-                  </td>
-                  <td className="border px-3 py-2 text-gray-600">
-                    {food.sugars}
-                  </td>
-                  <td className="border px-3 py-2">
-                    <button
-                      onClick={() => handlePopupOpen("update", mealType, food)}
-                      className="text-blue-600 hover:underline mr-3"
-                    >
-                      Update
-                    </button>
-                    <button
-                      onClick={() => removeFood(food.id)}
-                      className="text-red-600 hover:underline"
-                    >
-                      Remove
-                    </button>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {mealData.length > 0 ? (
+                mealData.map((food) => (
+                  <tr key={food.id} className="border-b hover:bg-blue-50">
+                    <td className="border px-3 py-2 text-gray-700">
+                      {food.name}
+                    </td>
+                    <td className="border px-3 py-2 text-gray-600">
+                      {food.calories}
+                    </td>
+                    <td className="border px-3 py-2 text-gray-600">
+                      {food.fats}
+                    </td>
+                    <td className="border px-3 py-2 text-gray-600">
+                      {food.protein}
+                    </td>
+                    <td className="border px-3 py-2 text-gray-600">
+                      {food.sugars}
+                    </td>
+                    <td className="border px-3 py-2">
+                      <button
+                        onClick={() => openUpdatePopup(mealType, food)}
+                        className="text-blue-600 hover:underline mr-3"
+                      >
+                        Update
+                      </button>
+                      <button
+                        onClick={() => removeFood(mealType, food.id)}
+                        className="text-red-600 hover:underline"
+                      >
+                        Remove
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td
+                    colSpan="6"
+                    className="border px-3 py-2 text-center text-gray-500 text-sm"
+                  >
+                    No food items for this meal.
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td
-                  colSpan="6"
-                  className="border px-3 py-2 text-center text-gray-500 text-sm"
-                >
-                  No food items for this meal.
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
-        <button
-          onClick={() => handlePopupOpen("add", mealType)}
-          className="mt-2 bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-        >
-          Add Food
-        </button>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  );
+    );
+  };
 
   return (
     <div className="bg-gray-100 min-h-screen p-6">
@@ -230,10 +240,8 @@ const FoodTimeTable = () => {
         <h1 className="text-2xl font-bold text-gray-800 text-center mb-4">
           Weekly Food TimeTable
         </h1>
-        <button className="p-3 bg-blue-400 text-white rounded-lg shadow-md" onClick={n}>
-        Refresh
-      </button>
 
+        {/* Buttons for days and add food */}
         <div className="flex justify-center space-x-2 mb-4">
           {Object.keys(foodData).map((day) => (
             <button
@@ -248,59 +256,178 @@ const FoodTimeTable = () => {
               {day}
             </button>
           ))}
+          <button
+            onClick={() => openAddPopup()}
+            className="py-2 px-4 rounded-lg bg-green-500 text-white text-sm font-medium hover:bg-green-600"
+          >
+            Add Food
+          </button>
         </div>
 
-        {["lunch", "dinner", "snacks", "breakfast"].map((meal) =>
-          renderMealSection(meal, meal.charAt(0).toUpperCase() + meal.slice(1))
+        {/* Render meal data */}
+        {["Breakfast", "Lunch", "Dinner", "Snacks"].map((meal) =>
+          renderMealSection(meal, meal)
         )}
       </div>
 
-      {/* Pop-up */}
-      {isPopupOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-          <div className="bg-white p-6 rounded-lg shadow-lg w-96">
-            <h2 className="text-lg font-semibold mb-4">
-              {popupType === "add" ? "Add Food" : "Update Food"}
-            </h2>
-            <form>
-              {["name", "calories", "fats", "protein", "sugars"].map(
-                (field) => (
-                  <div key={field} className="mb-3">
-                    <label className="block text-sm font-medium text-gray-600 mb-1 capitalize">
-                      {field}
-                    </label>
-                    <input
-                      type="text"
-                      name={field}
-                      value={formData[field]}
-                      onChange={handleFormChange}
-                      className="w-full px-3 py-2 border rounded-lg"
-                    />
-                  </div>
-                )
-              )}
-              <div className="flex justify-end space-x-2 mt-4">
-                <button
-                  type="button"
-                  onClick={handlePopupClose}
-                  className="bg-gray-300 px-4 py-2 rounded hover:bg-gray-400"
-                >
-                  Cancel
-                </button>
-                <button
-                  type="button"
-                  onClick={handleFormSubmit}
-                  className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                >
-                  Save
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
+      {/* Add Popup Modal */}
+      {isAddPopupOpen && (
+        <PopupAdd
+          title="Add Food"
+          formData={formData}
+          onClose={closeAddPopup}
+          onChange={handleFormChange}
+          onSubmit={handleAddFood}
+        />
+      )}
+
+      {/* Update Popup Modal */}
+      {isUpdatePopupOpen && (
+        <PopupUpdate
+          title="Update Food"
+          formData={formData}
+          onClose={closeUpdatePopup}
+          onChange={handleFormChange}
+          onSubmit={handleUpdateFood}
+        />
       )}
     </div>
   );
 };
+
+const PopupUpdate = ({ title, formData, onClose, onChange, onSubmit }) => (
+  <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="bg-white p-6 rounded-lg shadow-lg max-w-sm w-full">
+      <h2 className="text-xl font-semibold mb-4">{title}</h2>
+      <form>
+        {["name", "calories", "fats", "protein", "sugars"].map((field) => (
+          <div key={field} className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {field.charAt(0).toUpperCase() + field.slice(1)}
+            </label>
+            <input
+              type="text"
+              name={field}
+              value={formData[field]}
+              onChange={onChange}
+              className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            />
+          </div>
+        ))}
+        <div className="flex justify-end space-x-2">
+          <button
+            type="button"
+            onClick={onClose}
+            className="py-2 px-4 rounded-lg bg-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-300"
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            onClick={onSubmit}
+            className="py-2 px-4 rounded-lg bg-blue-500 text-white text-sm font-medium hover:bg-blue-600"
+          >
+            Submit
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+);
+
+const PopupAdd = ({
+  title,
+  formData,
+  onClose,
+  onChange,
+  onSubmit,
+  days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+  mealTypes = ["Breakfast", "Lunch", "Dinner", "Snacks"],
+}) => {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full">
+        <h2 className="text-xl font-semibold mb-4">{title}</h2>
+        <form>
+          {/* Day Selector */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Day</label>
+            <select
+              name="day"
+              value={formData.day}
+              onChange={onChange}
+              className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            >
+              <option value="" disabled>Select a day</option>
+              {days.map((day) => (
+                <option key={day} value={day}>
+                  {day}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Meal Type Selector */}
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-1">Meal Type</label>
+            <select
+              name="mealType"
+              value={formData.mealType}
+              onChange={onChange}
+              className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-sm"
+            >
+              <option value="" disabled>Select a meal type</option>
+              {mealTypes.map((type) => (
+                <option key={type} value={type}>
+                  {type}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          {/* Input fields in Grid for Better Responsive UI */}
+          <div className="grid grid-cols-2 gap-4">
+            {["name", "calories", "fats", "protein", "sugars"].map((field) => (
+              <div key={field} className="mb-4">
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  {field.charAt(0).toUpperCase() + field.slice(1)}
+                </label>
+                <input
+                  type="text"
+                  name={field}
+                  value={formData[field]}
+                  onChange={onChange}
+                  className="block w-full px-4 py-2 border border-gray-300 rounded-lg text-sm"
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Buttons */}
+          <div className="flex justify-end space-x-2 mt-4">
+            <button
+              type="button"
+              onClick={onClose}
+              className="py-2 px-4 rounded-lg bg-gray-200 text-gray-700 text-sm font-medium hover:bg-gray-300"
+            >
+              Cancel
+            </button>
+            <button
+              type="button"
+              onClick={onSubmit}
+              className="py-2 px-4 rounded-lg bg-blue-500 text-white text-sm font-medium hover:bg-blue-600"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  );
+};
+
+
+
+
 
 export default FoodTimeTable;
