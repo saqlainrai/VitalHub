@@ -138,22 +138,18 @@ const FoodTimeTable = () => {
     }
   };
 
-  const removeFood = async (mealType, id) => {
-    try {
-      await axios.delete(`http://localhost:5000/api/update-food/${id}`);
-      setFoodData((prevData) => ({
-        ...prevData,
-        [selectedDay]: {
-          ...prevData[selectedDay],
-          [mealType]: prevData[selectedDay][mealType].filter(
-            (item) => item.id !== id
-          ),
-        },
-      }));
-    } catch (error) {
-      console.error("Error deleting food item", error);
-    }
-  };
+ const removeFood = (mealType, id) => {
+   setFoodData((prevData) => ({
+     ...prevData,
+     [selectedDay]: {
+       ...prevData[selectedDay],
+       [mealType]: prevData[selectedDay][mealType].filter(
+         (item) => item.id !== id
+       ),
+     },
+   }));
+ };
+
 
   const renderMealSection = (mealType, mealName) => {
     const mealData = foodData[selectedDay]?.[mealType] || [];
