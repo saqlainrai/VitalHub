@@ -1,45 +1,86 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Router components
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ClerkProvider, SignedIn, SignedOut, SignIn, SignUp } from "@clerk/clerk-react"; // Clerk imports
 import NavbarMain from "./components/NavbarMain.jsx";
-import Home from "./pages/Home.jsx"; // Import the Home page
-import Login from "../src/components/Login.jsx"; // Import the Login page
-import FoodDashboard from "./pages/FoodDashboard.jsx"; // Import the Login page
-// import App from './App.jsx'
-import FitnessDashboard from './pages/FitnessDashboard.jsx'
-import ExerciseDetails from "./pages/ExerciseDetails.jsx"; // Import the Exercise Details page
-
-import Welcome from "./components/WelcomeFoodFitness.jsx"; // Import the Welcome screen
-import FoodForm from "./components/CaloriesRequirmentForm.jsx"; // Import the food form
-import "./index.css";
-import Footer from "./components/Footer.jsx"; // Import the footer
+import Home from "./pages/Home.jsx";
+import FoodDashboard from "./pages/FoodDashboard.jsx";
+import FitnessDashboard from "./pages/FitnessDashboard.jsx";
+import ExerciseDetails from "./pages/ExerciseDetails.jsx";
+import Welcome from "./components/WelcomeFoodFitness.jsx";
+import FoodForm from "./components/CaloriesRequirmentForm.jsx";
+import Footer from "./components/Footer.jsx";
 import FoodTimeTable from "./pages/FoodTimeTable.jsx";
 import ExpensesDashboard from "./pages/ExpensesDashboard.jsx";
-import SignUp from "./pages/SignUp.jsx";
-import './style.css'
+import "./index.css";
+import "./style.css";
+import App from "./App.jsx";
 
+// Your Clerk publishable key
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-// Render the application with routing
+if (!PUBLISHABLE_KEY) {
+  throw new Error("Missing Publishable Key");
+}
 createRoot(document.getElementById("root")).render(
-  // <StrictMode>
-    <Router>
-      <NavbarMain /> 
-      {/* Define the Routes */}
-      <Routes>
-        <Route path="/" element={<Home />} /> {/* Home page route */}
-        <Route path="/login" element={<Login />} /> {/* Login page route */}
-        <Route path="/signup" element={<SignUp />} /> {/* Login page route */}
-        <Route path="/welcome" element={<Welcome />} />{" "}
-        {/* Welcome screen route */}
-        <Route path="/fitness" element={<FitnessDashboard />} />
-        <Route path="/FoodForm" element={<FoodForm />} />
-        <Route path="/FoodDashBoard" element={<FoodDashboard />} />
-        <Route path="/FoodTimeTable" element={<FoodTimeTable />} />
-        <Route path="/ExpensesDashboard" element={<ExpensesDashboard />} />{" "}
-      </Routes>
-       {/* Footer placed outside the Routes */}
-       <Footer/>
-    </Router>
-  // </StrictMode>
-);
+  <StrictMode>
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      
+      <Router>
+        <NavbarMain />
+       
+        <Routes>
+          
+          <Route path="/" element={<Home />} />
+          <Route path="/welcome" element={<Welcome />} />
+          <Route path="/sign-in" element={<SignIn />} />
+          <Route path="/sign-up" element={<SignUp />} />
+          
+          <Route
+            path="/fitness"
+            element={
+              <SignedIn>
+                <FitnessDashboard />
+              </SignedIn>
+            }
+          />
+          <Route
+            path="/FoodForm"
+            element={
+              <SignedIn>
+                <FoodForm />
+              </SignedIn>
+            }
+          />
+          <Route
+            path="/FoodDashBoard"
+            element={
+              <SignedIn>
+                <FoodDashboard />
+              </SignedIn>
+            }
+          />
+          <Route
+            path="/FoodTimeTable"
+            element={
+              <SignedIn>
+                <FoodTimeTable />
+              </SignedIn>
+            }
+          />
+          <Route
+            path="/ExpensesDashboard"
+            element={
+              <SignedIn>
+                <ExpensesDashboard />
+              </SignedIn>
+            }
+          />
+        </Routes>
+        <Footer />
+      </Router>
 
+
+    </ClerkProvider>
+  </StrictMode>
+);
