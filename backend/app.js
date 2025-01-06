@@ -11,6 +11,7 @@ let Food = require('./models/food');
 const articleRouter = require('./routes/articles.js');
 const userRouter = require('./routes/user.js');
 const exercisesRouter = require('./routes/exercises.js');
+const passwordsRouter = require('./routes/passwords.js');
 
 const foodRoutes = require("./routes/foodTableRoutes");
 const MONGO_URL = process.env.MONGO_URL;
@@ -42,6 +43,7 @@ const ExerciseLog = require('./models/exerciseLog.js');
 app.use('/api/articles', articleRouter);
 app.use('/api/user', userRouter);
 app.use('/api/exercise', exercisesRouter);
+app.use('/api/password', passwordsRouter);
 
 app.get("/app", (req, res) => {
     res.redirect("http://localhost:5173");

@@ -1,0 +1,18 @@
+.add-expense .card {
+    border-radius: 8px;
+  }
+  
+  .add-expense .form-label {
+    font-weight: 500;
+  }
+  
+  .add-expense .btn-primary,
+  .add-expense .btn-secondary {
+    font-size: 1rem;
+  }
+  
+  .add-expense .btn-success {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  

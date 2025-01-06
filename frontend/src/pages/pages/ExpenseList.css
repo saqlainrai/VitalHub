@@ -1,0 +1,23 @@
+.expense-list table {
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .expense-list .btn-sm {
+    font-size: 0.9rem;
+    padding: 0.3rem 0.5rem;
+  }
+  
+  .expense-list .btn-info {
+    color: #fff;
+  }
+  
+  .expense-list .table-hover tbody tr:hover {
+    background-color: rgba(75, 192, 192, 0.6);
+  }
+  
+  .expense-list .table-bordered th,
+  .expense-list .table-bordered td {
+    text-align: center;
+  }
+  

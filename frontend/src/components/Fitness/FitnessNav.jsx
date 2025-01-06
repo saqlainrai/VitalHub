@@ -27,7 +27,7 @@ const ExpensesNav = ({ setActiveComponent }) => {
                     </a>
                     <a
                         onClick={() => handleNavigation("FitnessDiary")}
-                        className="cursor-pointer hover:text-gray-400"
+                        className="cursor-pointer caret-red-700 hover:text-gray-400"
                     >
                         Diary
                     </a>

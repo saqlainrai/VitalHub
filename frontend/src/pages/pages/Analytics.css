@@ -1,0 +1,51 @@
+.analytics-page .card {
+    border-radius: 8px;
+    border: none;
+  }
+  
+  .analytics-page h3 {
+    font-weight: bold;
+  }
+  
+  .analytics-page .text-danger {
+    color: #dc3545 !important;
+  }
+  
+  .analytics-page .text-success {
+    color: #28a745 !important;
+  }
+  
+  .analytics-page .text-primary {
+    color: #007bff !important;
+  }
+  
+  .analytics-page select {
+    border-radius: 5px;
+  }
+  .chart {
+    width: 80%;
+    height: 300px; /* Medium size for charts */
+    margin: 0 auto;
+    margin-top: 100px;
+  }
+
+
+
+
+  .card {
+    border-radius: 10px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+  
+  .card-text {
+    font-size: 1.5rem;
+  }
+  
