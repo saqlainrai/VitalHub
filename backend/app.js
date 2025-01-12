@@ -17,9 +17,32 @@ const foodRoutes = require("./routes/foodTableRoutes");
 const MONGO_URL = process.env.MONGO_URL;
 const port = 5000;
 
+let passport = require('passport');
+const LocalStrategy = require("passport-local");
+const session = require("express-session");
+
+const sessionOptions = {
+  secret: "supperHiddenCode",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 3 * 24 * 3600 * 1000,       // expires after 3 days
+    maxAge: 3 * 24 * 3600 * 1000,
+    httpOnly: true
+  }
+}
+
+app.use(session(sessionOptions));
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 // Middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.use(express.json());
 
 main()
   .then(() => {
@@ -46,11 +69,11 @@ app.use('/api/exercise', exercisesRouter);
 app.use('/api/password', passwordsRouter);
 
 app.get("/app", (req, res) => {
-    res.redirect("http://localhost:5173");
+  res.redirect("http://localhost:5173");
 });
 
 app.get('*', (req, res) => {
-    res.send("404 Page Not Found");
+  res.send("404 Page Not Found");
 });
 // Routes
 app.use('/api', foodRoutes);

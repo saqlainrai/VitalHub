@@ -46,7 +46,7 @@ const WelcomeFoodFitness = () => {
         </div>
         <button
           onClick={handleContinue} // Add onClick handler
-          className="sticky bottom-3 px-28 py-5 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-200"
+          className="bottom-3 px-28 py-3 bg-blue-500 text-white rounded-lg text-lg font-semibold hover:bg-blue-600 transition duration-200"
         >
           Continue
         </button>

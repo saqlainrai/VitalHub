@@ -18,16 +18,16 @@ const Footer = () => {
   return (
     <footer className="bg-[#07242B] text-white py-6 relative z-[-1]">
       {/* Header Section */}
-      <div className="mx-auto hidden sm:hidden lg:flex md:flex font-bold w-[90%] sm:text-sm md:text-lg lg:text-lg xl:text-xl">
+      {/* <div className="mx-auto hidden sm:hidden lg:flex md:flex font-bold w-[90%] sm:text-sm md:text-lg lg:text-lg xl:text-xl">
         <div className="w-1/4 px-4">About</div>
         <div className="w-[24%] px-4">Categories</div>
         <div className="w-[24%] px-4">Support</div>
         <div className="w-[27%] px-4">Subscribe</div>
-      </div>
+      </div> */}
 
-      <div className="justify-start mt-2 mb-2 hidden sm:hidden lg:flex md:flex">
+      {/* <div className="justify-start mt-2 mb-2 hidden sm:hidden lg:flex md:flex">
         <div className="w-[100%] h-[.5px] bg-gray-400"></div>
-      </div>
+      </div> */}
 
       <div className="mx-auto py-6 px-4 w-[90%]">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-4">

@@ -1,103 +1,49 @@
-// // src/App.jsx
-// import React, { useState, useEffect } from 'react';
-// import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-// import Navbar from './components/Fitness/Navbar';
-// import Sidebar from './components/Sidebar';
-// import Home from './pages/Home';
-// import Reports from './pages/Reports';
-// import BMI from './components/Fitness/BMI'
-// import ApexChartArea from './components/Fitness/ApexChartArea';
-// import ApexChartBar from './components/Fitness/ApexChartBar';
-// import ProgressBar from './components/Fitness/ProgressBar';
-// import ExerciseList from './components/Fitness/ExerciseList';
-// import './style.css'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom"; // Import Router components
+import NavbarMain from "./components/NavbarMain.jsx";
+import Home from "./pages/Home.jsx"; // Import the Home page
+import Login from "../src/components/Login.jsx"; // Import the Login page
+import FoodDashboard from "./pages/FoodDashboard.jsx"; // Import the Login page
+// import App from './App.jsx'
+import FitnessDashboard from './pages/FitnessDashboard.jsx'
+import ExerciseDetails from "./pages/ExerciseDetails.jsx"; // Import the Exercise Details page
+import Expenses from "./pages/Expenses.jsx"; // Import the Expenses page
+import Welcome from "./components/WelcomeFoodFitness.jsx"; // Import the Welcome screen
+import FoodForm from "./components/CaloriesRequirmentForm.jsx"; // Import the food form
+import Footer from "./components/Footer.jsx"; // Import the footer
+import FoodTimeTable from "./pages/FoodTimeTable.jsx";
+import ExpensesDashboard from "./pages/ExpensesDashboard.jsx";
+import PasswordDashboard from "./pages/PasswordDashboard.jsx"
+import SignUp from "./components/signup.jsx";
+import useAuth from './hooks/useAuth.jsx'
+import NotFound from './components/NotFound.jsx'
+import './style.css'
+import "./index.css";
 
-// const App = () => {
-//     const [data, setData] = useState([]);
-//     const [loading, setLoading] = useState(true);
-//     const [error, setError] = useState(null);
 
-//     let d = [
-//         {
-//             name: "Push-ups",
-//             progressValue: 0,
-//             totalValue: 50
-//         },
-//         {
-//             name: "Sit-ups",
-//             progressValue: 0,
-//             totalValue: 50
-//         },
-//         {
-//             name: "Squats",
-//             progressValue: 0,
-//             totalValue: 50
-//         },
-//         {
-//             name: "Pull-ups",
-//             progressValue: 0,
-//             totalValue: 50
-//         },
-//         {
-//             name: "Sprints",
-//             progressValue: 0,
-//             totalValue: 50
-//         }
-//     ];
-    
-//     useEffect(() => {
-//         const fetchData = async () => {
-//             try {
-//                 const response = await fetch(`/api/user/stats?id=1`);
-//                 if (!response.ok) {
-//                     // throw new Error('Network response was not ok');
-//                     setData(d);
-//                 }
-//                 else {
-//                     const jsonData = await response.json();
-//                     setData(jsonData);
-//                 }
-//             } catch (error) {
-//                 setError(error.message);
-//             } finally {
-//                 setLoading(false);
-//             }
-//         };
+const App = () => {
+    const { isLoggedIn, user, revalidate } = useAuth();
 
-//         fetchData();
-//     }, []); // Empty dependency array means this runs once on mount
+    return (
+        <Router>
+            <NavbarMain isLoggedIn={isLoggedIn} user={user} revalidate={revalidate} />
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/login" element={<Login onLogin={revalidate} />} /> 
+                <Route path="/signup" element={<SignUp onSignUp={revalidate} />} />
+                <Route path="/welcome" element={isLoggedIn ? <Welcome /> : <NotFound />} />
+                <Route path="/fitness" element={isLoggedIn ? <FitnessDashboard /> : <NotFound />} />
+                <Route path="/FoodForm" element={isLoggedIn ? <FoodForm /> : <NotFound />} />
+                <Route path="/FoodDashBoard" element={isLoggedIn ? <FoodDashboard /> : <NotFound />} />
+                <Route path="/FoodTimeTable" element={isLoggedIn ? <FoodTimeTable /> : <NotFound />} />
+                <Route path="/passwords" element={isLoggedIn ? <PasswordDashboard /> : <NotFound />} />
+                <Route path="/ExpensesDashboard" element={isLoggedIn ? <Expenses /> : <NotFound />} />
+            </Routes>
+            <Footer />
+        </Router>
+    );
+};
 
-//     if (loading) {
-//         return <div>Loading...</div>;
-//     }
 
-//     if (error) {
-//         return <div>Error: {error}</div>;
-//     }
-
-//     return (
-//         <>
-//             <Navbar />
-//             <div style={{ display: 'flex' }}>
-//                 {/* <Sidebar /> */}
-//                 {/* <main style={{ flexGrow: 1, padding: '20px' }}>
-//                     <Routes>
-//                         <Route path="/" element={<Home />} />
-//                         <Route path="/reports" element={<Reports />} />
-//                     </Routes>
-//                 </main> */}
-//                 <div className='parent'>
-//                     <div className="left">
-//                         <div className="exercise"><ApexChartArea /></div>
-//                         <div className="calories">
-//                             <ExerciseList data={data} />
-//                         </div>
-//                     </div>
-//                     <div className="right"><BMI /></div>
-//                 </div>
-//             </div>
-//         </>
-//     );
-// };
-
-// export default App;
+export default App;

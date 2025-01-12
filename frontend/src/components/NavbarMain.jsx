@@ -1,8 +1,10 @@
 import { useState, useRef, useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // Import useNavigate
 import arrow_logo from "../../public/arrow_top.png";
+import useAuth from "../hooks/useAuth";
 
-const NavbarMain = () => {
+const NavbarMain = ({isLoggedIn, user, revalidate}) => {
+  // const {isLoggedIn, user, revalidate} = useAuth();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null); // Create a ref for the dropdown
   const navigate = useNavigate(); // Initialize navigate
@@ -11,7 +13,6 @@ const NavbarMain = () => {
   const toggleDropdown = () => {
     setDropdownVisible((prev) => !prev);
   };
-
   // Close dropdown if clicked outside of it
   const handleClickOutside = (event) => {
     if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -32,6 +33,29 @@ const NavbarMain = () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [dropdownVisible]);
+
+  function handleProfileClick() {
+    alert("The Feature is under Development!");
+    setDropdownVisible(false);
+  }
+  function handleSettingsClick() {
+    alert("The Feature is under Development!");
+    setDropdownVisible(false);
+  }
+  async function handleLogOutClick() {
+    await fetch('/api/user/logout', {
+      method: 'GET',
+      credentials: 'include', // Ensure cookies are sent for session handling
+    })
+      .then(response => {
+        // console.log(response); // 'Logged out successfully'
+        // Redirect or update UI
+        revalidate();
+        alert("The User is Logged Out Successfully!");
+      })
+      .catch(error => console.log(error));
+    setDropdownVisible(false);
+  }
 
   return (
     <nav className="bg-gray-800 text-white p-4 top-0">
@@ -80,24 +104,24 @@ const NavbarMain = () => {
 
         {/* Name on the Right */}
         <div className="relative flex items-center space-x-[1px] lg:space-x-2 md:space-x-1 sm:space-x-[1px]">
-          <div
+          { isLoggedIn && <div
             className="flex items-center cursor-pointer"
             onClick={toggleDropdown}
           >
             <img
-              src="https://images.pexels.com/photos/12311410/pexels-photo-12311410.jpeg"
+              src="https://th.bing.com/th/id/R.1c75547f74d8aa7720a495f208c9b1c8?rik=cm6kaKgbGRM6Cg&pid=ImgRaw&r=0"
               alt="profile"
-              className="size-8 rounded-full"
+              className="size-8 rounded-full bg-white"
             />
             <p className="text-[9px] sm:text-[9px] md:text-[11px] lg:text-[13px] h-auto">
-              Anita Maika
+              Account
             </p>
             <img
-              src="https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-1024.png"
+              src={dropdownVisible ? "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-1024.png" : "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-1024.png"}
               alt="triangle up"
               className="size-4"
             />
-          </div>
+          </div> }
 
           {/* Dropdown Menu */}
           {dropdownVisible && (
@@ -108,19 +132,19 @@ const NavbarMain = () => {
               <ul>
                 <li
                   className="p-2 hover:bg-gray-600 cursor-pointer"
-                  onClick={() => setDropdownVisible(false)}
+                  onClick={handleProfileClick}
                 >
                   Profile
                 </li>
                 <li
                   className="p-2 hover:bg-gray-600 cursor-pointer"
-                  onClick={() => setDropdownVisible(false)}
+                  onClick={handleSettingsClick}
                 >
                   Settings
                 </li>
                 <li
                   className="p-2 hover:bg-gray-600 cursor-pointer"
-                  onClick={() => setDropdownVisible(false)}
+                  onClick={handleLogOutClick}
                 >
                   Logout
                 </li>
