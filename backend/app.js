@@ -16,7 +16,7 @@ const expensesRouter = require('./routes/expenses.js');
 
 const foodRoutes = require("./routes/foodTableRoutes");
 const MONGO_URL = process.env.MONGO_URL;
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 let passport = require('passport');
 const LocalStrategy = require("passport-local");
