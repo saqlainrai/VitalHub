@@ -5,8 +5,6 @@ import Manager from '../components/Password/Manager'
 import Footer from '../components/Password/Footer'
 
 function App() {
-
-
     return (
         <>
             <Navbar />

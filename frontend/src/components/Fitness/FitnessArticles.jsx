@@ -83,6 +83,7 @@ const ArticleDashboard = () => {
             try {
                 const response = await fetch('/api/articles/data'); // Replace with your API endpoint
                 const jsonData = await response.json();
+                // console.log(jsonData);
                 if (jsonData.length > 0) {
                   setArticles(jsonData);
                 }
@@ -101,8 +102,8 @@ const ArticleDashboard = () => {
 
     return (
         <Container>
-            {articles.map((article) => (
-                <ArticleCard key={article.source.id} src={article.url}>
+            {articles.map((article, index) => (
+                <ArticleCard key={index} src={article.url}>
                     <Image src={article.urlToImage} alt={article.title} />
                     <Content>
                         <Title>{article.title}</Title>

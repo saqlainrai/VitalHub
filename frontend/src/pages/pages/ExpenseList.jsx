@@ -20,7 +20,7 @@ const ExpenseList = ({ setTotalIncome, setTotalExpense, setWeeklyData, setCatego
 
   useEffect(() => {
     // Fetch expenses from the backend
-    axios.get("http://127.0.0.1:5000/expenses")
+    axios.get("/api/expenses/expenses")
       .then((response) => {
         const fetchedExpenses = response.data;
         setExpenses(fetchedExpenses);
@@ -34,7 +34,7 @@ const ExpenseList = ({ setTotalIncome, setTotalExpense, setWeeklyData, setCatego
       });
 
     // Fetch category limits from the backend
-    axios.get("http://127.0.0.1:5000/budget")
+    axios.get("/api/expenses/budget")
       .then((response) => {
         setCategoryLimits(response.data);
       })
@@ -128,7 +128,7 @@ const ExpenseList = ({ setTotalIncome, setTotalExpense, setWeeklyData, setCatego
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://127.0.0.1:5000/expenses/${id}`)
+    axios.delete(`/api/expenses/expenses/${id}`)
       .then(() => {
         const updatedExpenses = expenses.filter((expense) => expense._id !== id);
         setExpenses(updatedExpenses);
@@ -167,7 +167,7 @@ const ExpenseList = ({ setTotalIncome, setTotalExpense, setWeeklyData, setCatego
   const handleFormSubmit = (e) => {
     e.preventDefault();
     if (editingExpense) {
-      axios.put(`http://127.0.0.1:5000/expenses/${editingExpense._id}`, formData)
+      axios.put(`/api/expenses/expenses/${editingExpense._id}`, formData)
         .then((response) => {
           const updatedExpenses = expenses.map((expense) =>
             expense._id === editingExpense._id ? response.data : expense

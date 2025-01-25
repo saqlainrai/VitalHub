@@ -19,7 +19,19 @@ const WelcomeFoodFitness = () => {
     },
   ];
 
-  const handleContinue = () => {
+  const handleContinue = async () => {
+    try {
+      let response = await fetch("/api/user/checkDetails"); 
+      let data = await response.json();
+      if (data.success) {
+        navigate("/FoodDashboard"); // Redirect to /FoodDashboard when the button is clicked
+      } else {
+        navigate("/FoodForm"); // Redirect to /FoodForm when the button is clicked
+      }
+    }
+    catch (error) {
+      console.error("Error:", error);
+    }
     navigate("/FoodForm"); // Redirect to /FoodForm when the button is clicked
   };
 

@@ -21,7 +21,7 @@ const Settings = ({ categories, setCategories, categoryTotals }) => {
 
   const fetchBudget = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:5000/budget');
+      const response = await fetch('/api/expenses/budget');
       // console.log("response",response);
       if (response.ok) {
         const budgetData = await response.json();
@@ -83,7 +83,7 @@ const Settings = ({ categories, setCategories, categoryTotals }) => {
 
   const handleDeleteCategory = async (categoryToDelete) => {
     try {
-      const response = await fetch(`http://127.0.0.1:5000/budget`, {
+      const response = await fetch(`/api/expenses/budget`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
@@ -120,7 +120,7 @@ const Settings = ({ categories, setCategories, categoryTotals }) => {
     }
 
     try {
-      const response = await fetch('http://127.0.0.1:5000/budget', {
+      const response = await fetch('/api/expenses/budget', {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ const Settings = ({ categories, setCategories, categoryTotals }) => {
     }, 0);
 
     const totalBudgetSum = Object.values(budgetLimits).reduce((sum, budget) => sum + parseFloat(budget), 0);
-    console.log("the total sum of categorysum is", totalCategorySum, "and the total sum of total budget sum", totalBudgetSum);
+    // console.log("the total sum of categorysum is", totalCategorySum, "and the total sum of total budget sum", totalBudgetSum);
 
     if (totalCategorySum > totalBudgetSum) {
       setWarningMessage("Your budget is across.");
@@ -213,8 +213,6 @@ const Settings = ({ categories, setCategories, categoryTotals }) => {
           </div>
         </div>
       </div>
-
-
 
       {/* Budget Limits Form */}
       <div className="card shadow-sm mb-4">
@@ -277,8 +275,6 @@ const Settings = ({ categories, setCategories, categoryTotals }) => {
           </ul>
         </div>
       </div>
-
-
 
       {/* <div>
         # Displaying Warning Message

@@ -113,9 +113,9 @@ const Manager = () => {
     }
 
     const editPassword = (id) => {
-        console.log("Editing password with id: " + id)
-        setform({ ...passwordArray.filter(i => i.id === id)[0], id: id })
-        setpasswordArray(passwordArray.filter(item => item.id !== id))
+        // console.log("Editing password with id: " + id)
+        setform({ ...passwordArray.filter(i => i._id === id)[0], id: id })
+        setpasswordArray(passwordArray.filter(item => item._id !== id))
     }
 
     const handleChange = (e) => {
@@ -240,10 +240,10 @@ const Manager = () => {
                         <table className="table-auto w-full rounded-lg overflow-hidden mb-10">
                             <thead className="bg-blue-800 text-white">
                                 <tr>
-                                    <th className='py-2'>Site/App</th>
-                                    <th className='py-2'>Email</th>
-                                    <th className='py-2'>Password</th>
-                                    <th className="py-2">Actions</th>
+                                    <th className='p-2 text-center'>Site/App</th>
+                                    <th className='p-2 text-center'>Email</th>
+                                    <th className='p-2 text-center'>Password</th>
+                                    <th className="p-2 text-center">Actions</th>
                                 </tr>
                             </thead>
                             <tbody className='bg-blue-200'>
@@ -286,7 +286,7 @@ const Manager = () => {
                                             </div>
                                         </td>
                                         <td className='py-2 border border-white text-center'>
-                                            <span className='cursor-pointer mx-1' onClick={() => { editPassword(item.id) }}>
+                                            <span className='cursor-pointer mx-1' onClick={() => { editPassword(item._id) }}>
                                                 <lord-icon
                                                     src="https://cdn.lordicon.com/gwlusjdu.json"
                                                     trigger="hover"

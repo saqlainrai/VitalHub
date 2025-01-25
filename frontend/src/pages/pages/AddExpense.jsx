@@ -26,7 +26,7 @@ const AddExpense = ({ categories }) => {
       };
 
       axios
-        .post("http://127.0.0.1:5000/data", { ...formData, ...additionalData })
+        .post("/api/expenses/data", { ...formData, ...additionalData })
         .then((result) => {
           console.log("Server Response:", result.data);
           alert("Expense added successfully!");
@@ -45,7 +45,7 @@ const AddExpense = ({ categories }) => {
     } else {
       // If category is the default, just send the basic form data
       axios
-        .post("http://127.0.0.1:5000/data", formData)
+        .post("/api/expenses/data", formData)
         .then((result) => {
           console.log("Server Response:", result.data);
           alert("Expense added successfully!");

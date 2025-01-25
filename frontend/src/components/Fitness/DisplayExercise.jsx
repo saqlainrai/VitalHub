@@ -145,7 +145,7 @@ const DisplayExercise = ({ name, options, data, date, refresh }) => {
                             <td className="title">{name}</td>
                             {
                                 options.map((el, index) => (
-                                    <td className='btn' key={index} align="right">{el}</td>
+                                    <TableCell className='btn text-center' key={index} align="right">{el}</TableCell>
                                 ))
                             }
                         </TableRow>

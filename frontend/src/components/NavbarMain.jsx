@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom"; // Import useNavigate
 import arrow_logo from "../../public/arrow_top.png";
 import useAuth from "../hooks/useAuth";
 
-const NavbarMain = ({isLoggedIn, user, revalidate}) => {
+const NavbarMain = ({ isLoggedIn, user, revalidate }) => {
   // const {isLoggedIn, user, revalidate} = useAuth();
   const [dropdownVisible, setDropdownVisible] = useState(false);
   const dropdownRef = useRef(null); // Create a ref for the dropdown
@@ -63,13 +63,13 @@ const NavbarMain = ({isLoggedIn, user, revalidate}) => {
         {/* Title on the Left */}
         <div className="flex items-center justify-center">
           <div className="flex items-center w-28 sm:w-28 md:w-36 lg:w-25 xl:w-25 h-12">
-            <div className="flex items-center">
+            <div className="flex items-center hover:cursor-pointer" onClick={() => navigate("/")}>
               <img
                 src={arrow_logo} // Use <img> for the logo
                 alt="logo"
                 className="object-contain size-10" // Ensure the image maintains its aspect ratio
               />
-              <h3 className="font-semibold">VitalHub.</h3>
+              <h3 className="font-semibold">VitalHub</h3>
             </div>
           </div>
         </div>
@@ -104,7 +104,23 @@ const NavbarMain = ({isLoggedIn, user, revalidate}) => {
 
         {/* Name on the Right */}
         <div className="relative flex items-center space-x-[1px] lg:space-x-2 md:space-x-1 sm:space-x-[1px]">
-          { isLoggedIn && <div
+          {!isLoggedIn && (
+            <div className="flex items-center gap-4">
+              <button
+                className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
+                onClick={() => navigate('/login')}
+              >
+                Login
+              </button>
+              <button
+                className="bg-green-500 text-white py-2 px-4 rounded hover:bg-green-600"
+                onClick={() => navigate('/signup')}
+              >
+                Sign Up
+              </button>
+            </div>
+          )}
+          {isLoggedIn && <div
             className="flex items-center cursor-pointer"
             onClick={toggleDropdown}
           >
@@ -113,15 +129,15 @@ const NavbarMain = ({isLoggedIn, user, revalidate}) => {
               alt="profile"
               className="size-8 rounded-full bg-white"
             />
-            <p className="text-[9px] sm:text-[9px] md:text-[11px] lg:text-[13px] h-auto">
-              Account
+            <p className="text-[9px] sm:text-[9px] md:text-[11px] lg:text-[13px] h-auto px-2">
+              {user.username}
             </p>
             <img
               src={dropdownVisible ? "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-up-01-1024.png" : "https://cdn3.iconfinder.com/data/icons/faticons/32/arrow-down-01-1024.png"}
               alt="triangle up"
               className="size-4"
             />
-          </div> }
+          </div>}
 
           {/* Dropdown Menu */}
           {dropdownVisible && (

@@ -193,14 +193,30 @@ router.post('/login',
     }
 );
 
-// // Logout route
-// router.get('/logout', (req, res) => {
-//     req.logout((err) => {
-//         if (err) return next(err);
-//         res.json({ success: true, message: 'Logged out successfully' });
-//     });
-// });
+// Check if the details are filled
+router.get('/checkDetails', async (req, res) => {
+    if (req.isAuthenticated()) {
+        let id = req.user._id;
+        // console.log(id);
+        let details = await Detail.findOne({ userId: id });
+        // console.log(details);
+        return res.json({ success: true, message: "User is authenticated", id , details});
+    }
+    res.json({
+        "success": false,
+        "id" : null,
+        "message": "User is not authenticated",
+        "details": null
+    });
+});
 
+router.post("/previewData", async (req, res) => {
+    let data = req.body;
+    // console.log("The requested Data is: ", data);
+    res.send("Acknowledged");
+});
+
+// Logout route 
 router.get('/logout', (req, res) => {
     req.session.destroy((err) => {
         if (err) return res.status(500).json({ success: false, message: 'Logout failed' });

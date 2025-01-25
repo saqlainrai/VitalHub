@@ -11,14 +11,17 @@ const Navbar = ({ setActiveComponent }) => {
     setIsCollapsed(!isCollapsed);
   };
 
-  const closeNavbar = () => {
+  const closeNavbar = (name) => {
+    if (name) {
+      setActiveComponent(name);
+    }
     setIsCollapsed(true);
   };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container">
-        <NavLink className="navbar-brand" to="/" onClick={closeNavbar}>
+        <NavLink className="navbar-brand" onClick={() => closeNavbar(null)}>
           Expense Manager
         </NavLink>
         <button
@@ -34,27 +37,27 @@ const Navbar = ({ setActiveComponent }) => {
         <div className={`navbar-collapse ${!isCollapsed ? 'show slideInLeft' : ''}`} id="navbarNav">
           <ul className="navbar-nav ms-auto">
             <li className="nav-item">
-              <NavLink className="nav-link" to="/" exact onClick={closeNavbar}>
+              <NavLink className="nav-link flex justify-center items-center" exact onClick={() => closeNavbar("Dashboard")}>
                 <FaHome className="icon me-2" /> Dashboard
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link caret-slate-500" to="/add-expense" onClick={closeNavbar}>
+              <NavLink className="nav-link caret-slate-500 flex justify-center items-center" onClick={() => closeNavbar("Add Expense")}>
                 <FaPlus className="icon me-2" /> Add Expense
               </NavLink>
             </li>
-            <li className="nav-item">
-              <NavLink className="nav-link" to="/expense-list" onClick={closeNavbar}>
+            {/* <li className="nav-item">
+              <NavLink className="nav-link flex justify-center items-center" onClick={() => closeNavbar("Expense List")}>
                 <FaList className="icon me-2" /> Expense List
               </NavLink>
-            </li>
+            </li> */}
             <li className="nav-item">
-              <NavLink className="nav-link" to="/analytics" onClick={closeNavbar}>
+              <NavLink className="nav-link flex justify-center items-center" onClick={() => closeNavbar("Analytics")}>
                 <FaChartPie className="icon me-2" /> Analytics
               </NavLink>
             </li>
             <li className="nav-item">
-              <NavLink className="nav-link" to="/settings" onClick={closeNavbar}>
+              <NavLink className="nav-link flex justify-center items-center" onClick={() => closeNavbar("Settings")}>
                 <FaCog className="icon me-2" /> Budget Limits
               </NavLink>
             </li>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
 
-const Login = ({onLogin}) => {
+const Login = ({ onLogin }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
@@ -58,31 +58,46 @@ const Login = ({onLogin}) => {
   const handleLogin = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      // console.log("Form submitted successfully!", formData);
-      await fetch('/api/user/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          username: formData.email,
-          password: formData.password,
-        }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          if (data.success) {
-            // console.log('Login successful:', data.user);
-            onLogin();
-            navigate("/welcome");
+      try {
+        // Make the login API call
+        const loginResponse = await fetch('/api/user/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            username: formData.email,
+            password: formData.password,
+          }),
+        });
+  
+        const loginData = await loginResponse.json();
+  
+        if (loginData.success) {
+          // Login successful
+          onLogin();
+  
+          // Check user details
+          const detailsResponse = await fetch("/api/user/checkDetails");
+          const detailsData = await detailsResponse.json();
+  
+          if (detailsData.details) {
+            navigate("/FoodDashboard"); // Redirect to FoodDashboard
           } else {
-            console.error('Login failed');
-            setErrors({...errors, login: "There was an error logging you in! Please Try Again"})
+            navigate("/welcome"); // Redirect to welcome
           }
-        })
-        .catch((error) => console.error('Error:', error));
+        } else {
+          // Login failed
+          console.error('Login failed');
+          setErrors({ ...errors, login: "There was an error logging you in! Please Try Again" });
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        setErrors({ ...errors, login: "An unexpected error occurred. Please try again later." });
+      }
     }
   };
+  
 
   return (
     <div className="flex items-center justify-center bg-gray-100">
